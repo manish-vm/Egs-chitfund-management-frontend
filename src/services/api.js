@@ -1,7 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
-const baseURL = ='https://egs-chitfund-management-backend.onrender.com/api' ;
+const baseURL = 'https://egs-chitfund-management-backend.onrender.com/api' ;
 
 const api = axios.create({
   baseURL,
@@ -35,5 +35,6 @@ api.interceptors.response.use(
 );
 
 export default api;
+
 
 
