@@ -133,7 +133,7 @@ const Dashboard = () => {
                     <img
                       src={images[currentIndex].data || images[currentIndex].url}
                       alt={images[currentIndex].name || 'slide'}
-                      className="slideshow-image wide"
+                      className="slideshow-image"
                     />
                   </div>
                 )}

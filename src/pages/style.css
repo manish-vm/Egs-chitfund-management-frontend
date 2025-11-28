@@ -9,6 +9,18 @@
   align-items: center;
 }
 
+.welcome-header{
+  font-size: 70px;
+  color: white;
+}
+.sp-egs{
+  font-size: 80px;
+  color: rgb(173, 173, 173);
+  padding: 10px;
+  font-style: italic;
+  font-weight: 600;
+  
+}
 @media (max-width: 767px) {
   .hero-section { padding: 70px 12px; min-height: 48vh; }
   .hero-title { font-size: 1.6rem; }

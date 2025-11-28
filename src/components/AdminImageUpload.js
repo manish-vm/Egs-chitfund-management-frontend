@@ -4,7 +4,10 @@ import axios from "axios";
 import "./AdminImageUpload.css";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api/images" || "https://node.egschitfund.com/api",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000/api/images"
+      : "https://node.egschitfund.com/api/images",
 });
 
 export default function AdminImageUpload() {
@@ -20,26 +23,30 @@ export default function AdminImageUpload() {
       reader.onerror = (error) => reject(error);
     });
 
-  // Triggered when user selects file
   const handleFileSelect = (e) => {
     const files = Array.from(e.target.files);
     setSelectedFiles(files);
   };
 
-  // Upload selected images manually
   const handleUpload = async () => {
-    if (selectedFiles.length === 0) return alert("Please select images first!");
+    try {
+      if (selectedFiles.length === 0)
+        return alert("Please select images first!");
 
-    const newImages = await Promise.all(
-      selectedFiles.map(async (file) => {
-        const base64 = await toBase64(file);
-        return { name: file.name, data: base64 };
-      })
-    );
+      const newImages = await Promise.all(
+        selectedFiles.map(async (file) => ({
+          name: file.name,
+          data: await toBase64(file),
+        }))
+      );
 
-    const res = await api.post("/upload", { images: newImages });
-    setImages([...images, ...res.data]);
-    setSelectedFiles([]);
+      const res = await api.post("/upload", { images: newImages });
+      setImages([...images, ...res.data]);
+      setSelectedFiles([]);
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed");
+    }
   };
 
   const handleDelete = async (index, id) => {
@@ -60,13 +67,12 @@ export default function AdminImageUpload() {
     const file = e.target.files[0];
     if (!file) return;
 
-    const base64 = await toBase64(file);
     const updated = [...images];
     const old = updated[editIndex];
 
     const res = await api.put(`/${old._id}`, {
       name: file.name,
-      data: base64,
+      data: await toBase64(file),
     });
 
     updated[editIndex] = res.data;
@@ -89,7 +95,6 @@ export default function AdminImageUpload() {
       <div className="content-container">
         <h2 className="page-title">📸 Slider Images</h2>
 
-        {/* Add Image Button */}
         <div className="upload-box">
           <button
             className="add-image-btn"
@@ -107,7 +112,6 @@ export default function AdminImageUpload() {
           />
         </div>
 
-        {/* Optional Upload Selected Button */}
         {selectedFiles.length > 0 && (
           <button className="upload-btn" onClick={handleUpload}>
             ⬆️ Upload Selected ({selectedFiles.length})
@@ -127,10 +131,7 @@ export default function AdminImageUpload() {
                 <img src={img.data} alt={img.name} className="preview-img" />
                 <p className="image-name">{img.name}</p>
                 <div className="btn-group">
-                  <button
-                    className="edit-btn"
-                    onClick={() => handleEdit(index)}
-                  >
+                  <button className="edit-btn" onClick={() => handleEdit(index)}>
                     ✏️ Edit
                   </button>
                   <button
@@ -140,6 +141,7 @@ export default function AdminImageUpload() {
                     🗑️ Delete
                   </button>
                 </div>
+
                 {editIndex === index && (
                   <input
                     type="file"

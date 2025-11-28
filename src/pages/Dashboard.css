@@ -119,6 +119,7 @@
    Slideshow
 =========================== */
 .slideshow-wrapper {
+  width: 100%;
   margin-top: 25px;
   border-radius: 16px;
   overflow: hidden;
@@ -129,11 +130,10 @@
 }
 
 /* ✅ Full width slideshow */
-.slideshow-wrapper.full-width {
+.slideshow-wrapper {
   width: 200%;
   margin-left: 150px;
 }
-
 .slideshow-image {
   width: 100%;
   height: 260px;
@@ -142,10 +142,9 @@
 }
 
 /* ✅ Larger slideshow for wide view */
-.slideshow-image.wide {
-  height: 350px;
+.slideshow-image{
+  margin: 0;
 }
-
 .slideshow-caption {
   position: absolute;
   bottom: 0;
@@ -267,8 +266,9 @@
   width: 100%;
  }
  .slideshow-wrapper{
-  height: 150px;
-  width: 250px;
+  height: 200px;
+  width: 300px;
+  margin-left: -10px;
  }
  
  .dashboard-profile-right, .dashboard-info-grid{
