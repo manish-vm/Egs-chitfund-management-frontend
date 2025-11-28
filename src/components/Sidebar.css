@@ -1,0 +1,195 @@
+/* Base sidebar (desktop) */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+  color: white;
+  padding: 1.5rem 1rem;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 100;
+}
+
+/* Hide desktop-sidebar on small screens (we'll show mobile drawer) */
+.desktop-sidebar { display: block; }
+
+.sidebar-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #4b5563;
+  margin-bottom: 2rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(0,0,0,0.15);
+  box-shadow: 0 0 5px rgba(147, 197, 253, 0.12);
+}
+
+.sidebar-link:hover .sidebar-icon,
+.sidebar-link:hover .sidebar-text {
+  color: #60a5fa;
+}
+
+.sidebar-link.active {
+  background-color: #2563eb;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.28);
+  border: 2px solid rgba(59,130,246,0.2);
+}
+
+.sidebar-icon {
+  font-size: 1.125rem;
+  transition: transform 0.2s ease;
+}
+
+.icon-active {
+  transform: scale(1.2);
+  color: white;
+}
+
+.sidebar-text {
+  transition: color 0.2s ease;
+}
+
+.text-active {
+  color: white;
+}
+
+/* ---------------- Mobile UI ---------------- */
+
+/* Mobile hamburger button (floating) */
+.mobile-hamburger {
+  position: fixed;
+  left: 12px;
+  top: 12px;
+  margin-top: 100px;
+  z-index: 1100;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg,#fff,#f1f5f9);
+  color: #0b1220;
+  box-shadow: 0 6px 18px rgba(12, 20, 48, 0.12);
+  cursor: pointer;
+}
+
+.mobile-hamburger.open {
+  margin-left: 180px;
+  transition-duration: 0.5s;
+}
+
+/* Hidden by default on larger screens */
+.mobile-hamburger { display: none; }
+
+/* overlay that dims the page when drawer is open */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 7, 12, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease, visibility 220ms;
+  z-index: 1050;
+}
+
+/* drawer */
+.mobile-drawer {
+  margin-top: 90px;
+  position: fixed;
+  left: -320px; /* hidden off-screen */
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  max-width: 86%;
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+  color: white;
+  box-shadow: 4px 0 28px rgba(2,6,23,0.4);
+  z-index: 1060;
+  transition: left 260ms cubic-bezier(.2,.9,.2,1);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* inner container to scroll if long */
+.mobile-drawer-inner { overflow-y: auto; padding-bottom: 24px; }
+
+/* show when open */
+.mobile-overlay.visible { opacity: 1; visibility: visible; }
+.mobile-drawer.open { left: 0; }
+
+/* mobile drawer title */
+.sidebar-title-mobile {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-align: left;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 1rem;
+}
+
+/* mobile-specific menu list */
+.sidebar-menu-mobile {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-menu-mobile li { margin-bottom: 8px; }
+
+/* Reuse same link style but with mobile spacing */
+.sidebar-menu-mobile .sidebar-link {
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  color: white;
+}
+
+/* small-screen tweaks */
+@media (max-width: 991px) {
+  /* hide desktop sidebar, show mobile elements */
+  .desktop-sidebar { display: none; }
+  .mobile-hamburger { display: flex; }
+
+  /* ensure content below left side (if you want overlay to occupy full width) */
+}
+
+/* accessibility / focus outline */
+.sidebar-link:focus { outline: 2px dashed rgba(96,165,250,0.45); outline-offset: 2px; }
+
+/* small polish: ensure icons align nicely on mobile */
+.sidebar-icon { display: inline-flex; align-items: center; justify-content: center; }
+
+/* safe fallback for older browsers */
+@supports (-webkit-overflow-scrolling: touch) {
+  .mobile-drawer-inner { -webkit-overflow-scrolling: touch; }
+}

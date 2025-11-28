@@ -1,0 +1,218 @@
+/* Main wrapper layout */
+.mychits-main-wrapper-1123 {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  box-sizing: border-box;
+  margin-top: 80px;
+}
+
+/* Left column (list of chits) */
+.mychits-left-1123 {
+  flex: 1;
+}
+
+.mychits-title-1123 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1f2937;
+}
+
+.mychits-empty-1123 {
+  color: #6b7280;
+  font-size: 1rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Chit card styles */
+.mychits-card-1123 {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mychits-card-1123:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.chit-name-1123 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.chit-info-1123 {
+  display: flex;
+  align-items: center;
+  color: #374151;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.icon-1123 {
+  margin-right: 5px;
+  color: #2563eb;
+}
+
+/* Pay button */
+.pay-btn-1123 {
+  margin-top: 10px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.pay-btn-1123:hover {
+  background-color: #1d4ed8;
+}
+
+/* Right column (payment view) */
+.mychits-right-1123 {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px;
+  min-height: 200px;
+}
+
+.placeholder-1123 {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
+  padding: 30px 10px;
+}
+
+/* 📱 Mobile responsiveness */
+/* ===========================
+   📱 MOBILE RESPONSIVE DESIGN
+   =========================== */
+
+/* Medium Devices - Tablet (≤ 992px) */
+@media (max-width: 992px) {
+  .mychits-main-wrapper-1123 {
+    flex-direction: column;
+    padding: 18px;
+    gap: 15px;
+  }
+
+  .mychits-right-1123 {
+    margin-top: 15px;
+  }
+}
+
+/* Small Devices - Mobile Landscape (≤ 768px) */
+@media (max-width: 768px) {
+  .mychits-main-wrapper-1123 {
+    flex-direction: column;
+    padding: 15px 12px;
+    margin-top: 70px;
+  }
+
+  .mychits-title-1123 {
+    font-size: 1.35rem;
+    text-align: center;
+  }
+
+  .mychits-card-1123 {
+    padding: 13px;
+    border-radius: 10px;
+  }
+
+  .chit-name-1123 {
+    font-size: 1.15rem;
+  }
+
+  .chit-info-1123 {
+    font-size: 0.9rem;
+  }
+
+  .icon-1123 {
+    font-size: 1rem;
+  }
+
+  .pay-btn-1123 {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .mychits-right-1123 {
+    padding: 14px;
+    margin-top: 20px;
+  }
+}
+
+/* Extra Small Devices - Mobile Portrait (≤ 480px) */
+@media (max-width: 480px) {
+
+  .mychits-left-1123{
+    overflow: auto;
+  }
+  .mychits-main-wrapper-1123 {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .mychits-title-1123 {
+    font-size: 1.25rem;
+  }
+
+  .mychits-card-1123 {
+    padding: 12px;
+  }
+
+  .chit-name-1123 {
+    font-size: 1.05rem;
+  }
+
+  .chit-info-1123 {
+    font-size: 0.85rem;
+  }
+
+  .pay-btn-1123 {
+    font-size: 0.9rem;
+    padding: 9px;
+  }
+
+  .mychits-right-1123 {
+    padding: 12px;
+  }
+
+  .placeholder-1123 {
+    font-size: 0.9rem;
+    padding: 20px 5px;
+  }
+}
+
+/* Ultra Small Devices (≤ 360px) */
+@media (max-width: 360px) {
+  .mychits-card-1123 {
+    padding: 10px;
+  }
+
+  .chit-info-1123 {
+    font-size: 0.8rem;
+  }
+
+  .pay-btn-1123 {
+    font-size: 0.85rem;
+  }
+}
+

@@ -1,0 +1,136 @@
+/* Layout */
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f8f9fa;
+  margin-top: 90px;
+}
+
+.admin-main {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.admin-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 20px;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stats-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.3s ease;
+}
+
+.stats-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.stats-card-text h2 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #718096;
+  letter-spacing: 0.5px;
+}
+
+.stats-card-text p {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-top: 5px;
+}
+
+.stats-card-icon {
+  background: #edf2f7;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  color: #4a5568;
+}
+
+/* Recent Users */
+.recent-users {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.recent-users h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2d3748;
+}
+
+.no-users {
+  color: #718096;
+}
+
+/* Table */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table thead {
+  background: #f7fafc;
+  color: #4a5568;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px 15px;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background 0.2s;
+}
+
+.users-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .admin-title {
+    font-size: 1.5rem;
+  }
+
+  .stats-card-text p {
+    font-size: 1.4rem;
+  }
+
+  .users-table th, .users-table td {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+}

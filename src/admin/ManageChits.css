@@ -1,0 +1,345 @@
+.manage-container {
+  display: flex;
+  background: #f9fafb;
+  min-height: 100vh;
+  margin-top: 95px;
+}
+
+.manage-main {
+  flex: 1;
+  padding: 20px;
+}
+
+.manage-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #112e7d;
+}
+
+.error-text {
+  color: #dc2626;
+  margin-bottom: 10px;
+}
+
+.table-container {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.chit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.chit-table th, .chit-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.chit-table th {
+  background: #dbeafe;
+  color: #1e3a8a;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.chit-table tr:hover {
+  background: #f3f4f6;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+}
+
+select {
+  padding: 5px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: white;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-content h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.modal-content input {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  color: #1f2937;
+  padding: 8px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.update-btn {
+  background: #2563eb;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
+}
+
+.update-btn:hover {
+  background: #1e40af;
+}
+
+/* SEARCH BOX */
+.search-box {
+  width: 100%;
+  margin: 16px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+  background: #fff;
+}
+
+.search-box input:focus {
+  border-color: #4a8bff;
+  box-shadow: 0 0 5px rgba(74, 139, 255, 0.3);
+}
+
+/* PAGINATION */
+.pagination-container {
+  margin: 24px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pagination-container button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #6187d8;
+  background: #5e7cde;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.pagination-container button:hover {
+  background: #91c8ff;
+}
+
+.pagination-container button:disabled {
+  background: #eaeaea;
+  cursor: not-allowed;
+}
+
+.pagination-container .active-page {
+  background: #4a8bff;
+  color: #fff;
+  border-color: #4a8bff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .manage-main {
+    padding: 10px;
+  }
+  
+  .modal-content {
+    max-width: 90%;
+  }
+
+  .chit-table th, .chit-table td {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}
+
+/* =========================================================
+   📱 Extra Responsive  – Mobile Optimized
+   ========================================================= */
+
+/* ---------- 768px and below (Tablets + Big Phones) ---------- */
+@media (max-width: 768px) {
+  .manage-container {
+    flex-direction: column;
+    margin-top: 70px;
+  }
+
+  .manage-main {
+    padding: 12px;
+  }
+
+  .manage-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .table-container {
+    border-radius: 6px;
+    box-shadow: none;
+  }
+
+  .chit-table th, .chit-table td {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .modal-content {
+    max-width: 95%;
+    padding: 15px;
+  }
+}
+
+/* ---------- 480px and below (Small Phones) ---------- */
+@media (max-width: 480px) {
+
+  .manage-main{
+    margin-top: 50px;
+  }
+
+  .manage-title {
+    font-size: 1.35rem;
+  }
+
+  /* Reduce spacing */
+  .manage-main {
+    padding: 8px;
+  }
+
+  /* Table → More compact */
+  .chit-table th {
+    font-size: 0.75rem;
+    padding: 6px;
+  }
+
+  .chit-table td {
+    font-size: 0.78rem;
+    padding: 6px;
+  }
+
+  /* Dropdown smaller */
+  select {
+    padding: 4px 6px;
+    font-size: 0.78rem;
+  }
+
+  /* Modal improvements */
+  .modal-content {
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .modal-content input {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .modal-buttons button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------- 360px and below (Very Small Phones) ---------- */
+@media (max-width: 360px) {
+
+  .manage-title {
+    font-size: 1.2rem;
+  }
+
+  /* Convert table into stacked cards for tiny screens */
+  .chit-table thead {
+    display: none; /* Hide table header */
+  }
+
+  .chit-table tr {
+    display: block;
+    margin-bottom: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .chit-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.8rem;
+    border-bottom: 1px dashed #e5e7eb;
+  }
+
+  .chit-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Add labels before each row item */
+  .chit-table td:nth-child(1)::before { content: "Name: "; font-weight: 600; }
+  .chit-table td:nth-child(2)::before { content: "Amount: "; font-weight: 600; }
+  .chit-table td:nth-child(3)::before { content: "Duration: "; font-weight: 600; }
+  .chit-table td:nth-child(4)::before { content: "Members: "; font-weight: 600; }
+  .chit-table td:nth-child(5)::before { content: "Start Date: "; font-weight: 600; }
+  .chit-table td:nth-child(6)::before { content: "Actions: "; font-weight: 600; }
+
+  /* Dropdown full-width inside card */
+  select {
+    width: 100%;
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 92%;
+  }
+}

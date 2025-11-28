@@ -1,0 +1,27 @@
+/* AppLayout.css */
+
+/* Overall layout */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* Prevent scrollbars on the whole layout */
+}
+
+/* Sidebar section */
+.app-layout .sidebar1 {
+  flex-shrink: 0;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: scroll; /* Still scrollable */
+  -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none;     /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar in Chrome, Safari and Opera */
+.main-content::-webkit-scrollbar {
+  display: none;
+}

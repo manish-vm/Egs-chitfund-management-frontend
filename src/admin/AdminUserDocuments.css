@@ -1,0 +1,180 @@
+/* Layout */
+.admin-docs-container {
+  padding: 2rem;
+  background: #f8fafc;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+.admin-docs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.admin-docs-header h2 {
+  font-size: 1.5rem;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+
+/* Back Button */
+.back-btn {
+  background: #e2e8f0;
+  border: none;
+  color: #334155;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: 0.2s;
+}
+.back-btn:hover {
+  background: #cbd5e1;
+}
+
+/* Card Container */
+.admin-docs-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Each Row */
+.admin-docs-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.admin-docs-row label {
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Inputs */
+.admin-docs-row input[type="text"],
+.admin-docs-row input[type="number"],
+.admin-docs-row input[type="date"],
+.admin-docs-row select {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background: #f9fafb;
+}
+
+.admin-docs-row input:focus,
+.admin-docs-row select:focus {
+  border-color: #3b82f6;
+  outline: none;
+  background: #fff;
+}
+
+/* File Input and Links */
+.file-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.file-actions input[type="file"] {
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.view-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+.view-link:hover {
+  text-decoration: underline;
+}
+
+.not-provided {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+.btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn:hover {
+  background: #2563eb;
+}
+
+.btn.approve {
+  background: #16a34a;
+}
+.btn.approve:hover {
+  background: #15803d;
+}
+
+.btn.reject {
+  background: #dc2626;
+}
+.btn.reject:hover {
+  background: #b91c1c;
+}
+
+/* Status Colors */
+select[value="verified"],
+select option[value="verified"] {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+select[value="rejected"],
+select option[value="rejected"] {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+select[value="pending"],
+select option[value="pending"] {
+  color: #d97706;
+  font-weight: 600;
+}
+
+/* Loading Screen */
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: #475569;
+  font-size: 1.2rem;
+  font-weight: 500;
+}

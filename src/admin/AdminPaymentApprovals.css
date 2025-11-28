@@ -1,0 +1,350 @@
+/* -------------------- Layout -------------------- */
+.admin-approvals-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #eef2f8;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 90px;
+}
+
+.admin-approvals-container .sidebar {
+  flex-shrink: 0;
+  width: 250px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  margin-top: 90px;
+}
+
+.admin-payments-page {
+  flex: 1;
+  margin-left: 250px;
+  padding: 40px 50px;
+  background: #f9fbfd;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+/* -------------------- Header -------------------- */
+.admin-payments-page h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0d225b;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.admin-payments-page h2::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 4px;
+  background-color: #007bff;
+  bottom: -8px;
+  left: 0;
+  border-radius: 4px;
+}
+
+/* -------------------- Table Container -------------------- */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+}
+
+/* -------------------- Table Styling -------------------- */
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.requests-table thead {
+  background: linear-gradient(90deg, #007bff, #00b8ff);
+  color: #fff;
+  border-radius: 10px;
+}
+
+.requests-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.requests-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #e6e9ef;
+  vertical-align: middle;
+  background-color: #fff;
+}
+
+.requests-table tbody tr:hover {
+  background-color: #f5f9ff;
+  transition: background-color 0.2s ease;
+}
+
+/* -------------------- Buttons -------------------- */
+.requests-table td button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 300;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.approve-btn {
+  background: linear-gradient(90deg, #28a745, #34ce57);
+  color: white;
+  box-shadow: 0 3px 6px rgba(40, 167, 69, 0.3);
+}
+
+.approve-btn:hover {
+  background: linear-gradient(90deg, #218838, #2ecc71);
+  transform: translateY(-2px);
+}
+
+.reject-btn {
+  background: linear-gradient(90deg, #dc3545, #f06575);
+  color: white;
+  margin-left: 10px;
+  box-shadow: 0 3px 6px rgba(220, 53, 69, 0.3);
+}
+
+.reject-btn:hover {
+  background: linear-gradient(90deg, #c82333, #e74c3c);
+  transform: translateY(-2px);
+}
+
+/* -------------------- Loading & Empty States -------------------- */
+.admin-payments-page div {
+  font-size: 16px;
+  color: #4a4a4a;
+}
+
+.admin-payments-page .empty-state {
+  text-align: center;
+  color: #999;
+  margin-top: 50px;
+  font-size: 17px;
+}
+
+/* -------------------- Scrollbar Customization -------------------- */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #b0bec5;
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #90a4ae;
+}
+
+/* Global Search Input */
+.global-search-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 12px 0 18px 0;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.page-btn,
+.page-number {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: #fff;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.page-number.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.page-btn:disabled,
+.page-number:disabled {
+  background: #eee;
+  cursor: not-allowed;
+}
+
+.page-btn:hover:not(:disabled),
+.page-number:hover:not(.active) {
+  background: #f0f0f0;
+}
+
+
+/* -------------------- Responsive Design -------------------- */
+@media (max-width: 992px) {
+  .admin-payments-page {
+    margin-left: 0;
+    padding: 25px;
+  }
+
+  .admin-payments-page h2 {
+    font-size: 24px;
+  }
+
+  .requests-table th,
+  .requests-table td {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .approve-btn,
+  .reject-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .table-container {
+    padding: 10px;
+  }
+}
+
+/* -------------------- Mobile Responsive Enhancements -------------------- */
+@media (max-width: 768px) {
+  .admin-approvals-container {
+    flex-direction: column;
+    margin-top: 0;
+  }
+
+  .admin-approvals-container .sidebar {
+    width: 100%;
+    position: relative;
+    height: auto;
+    margin-top: 0;
+  }
+
+  .admin-payments-page {
+    margin-left: 0;
+    padding: 20px 15px;
+  }
+
+  .admin-payments-page h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .table-container {
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Table adjustments for mobile */
+  .requests-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .requests-table thead {
+    display: none; /* Hide table headers */
+  }
+
+  .requests-table tbody tr {
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #e6e9ef;
+    border-radius: 10px;
+    padding: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  }
+
+  .requests-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .requests-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 500;
+    color: #555;
+    flex-basis: 45%;
+  }
+
+  .serial-number {
+    display: none;
+  }
+
+  .actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .approve-btn,
+  .reject-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+    margin-left: 5px;
+  }
+
+  /* Loading & Empty States */
+  .admin-payments-page div {
+    font-size: 15px;
+  }
+
+  .admin-payments-page .empty-state {
+    font-size: 16px;
+    margin-top: 30px;
+  }
+}
+
+/* -------------------- Extra Small Devices (Phones < 480px) -------------------- */
+@media (max-width: 480px) {
+  .admin-payments-page {
+    padding: 15px 10px;
+    margin-top: 170px;
+    overflow: auto;
+  }
+  
+  .requests-table tbody td {
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .requests-table tbody td::before {
+    flex-basis: 100%;
+    margin-bottom: 5px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .approve-btn,
+  .reject-btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+}

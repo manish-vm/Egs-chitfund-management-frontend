@@ -1,0 +1,176 @@
+/* AdminImageUpload.css */
+
+/* Overall container */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  margin-top: 80px;
+  background-color: #f5f6fa;
+}
+
+/* Content area */
+.content-container {
+  flex: 1;
+  padding: 30px 40px;
+  overflow-y: auto;
+}
+
+/* Page title */
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #1e3a72;
+}
+
+/* Upload section */
+.upload-box {
+  margin-bottom: 15px;
+}
+
+.add-image-btn {
+  background-color: #1e90ff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-image-btn:hover {
+  background-color: #0d6efd;
+  transform: translateY(-2px);
+}
+
+/* Upload Selected Button */
+.upload-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+/* Refresh Button */
+.refresh-btn {
+  background-color: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+  background-color: #e0a800;
+  transform: translateY(-2px);
+}
+
+/* Image gallery grid */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+/* Individual image card */
+.image-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 12px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Image preview */
+.preview-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Image name */
+.image-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+/* Button group inside card */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Edit and Delete buttons */
+.edit-btn, .delete-btn {
+  font-size: 13px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background-color: #138496;
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+}
+
+/* Update input for editing image */
+.update-input {
+  margin-top: 10px;
+  display: block;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+/* No images text */
+.no-images {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  padding: 40px 0;
+}

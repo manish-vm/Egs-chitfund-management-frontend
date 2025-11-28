@@ -1,0 +1,244 @@
+/* Root container */
+.contribution-container-1123 {
+  padding: 40px 20px;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+/* Card Layout */
+.contribution-card-1123 {
+  width: 100%;
+  max-width: 1100px;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contribution-card-1123:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.contribution-title-1123 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-1123 {
+  font-size: 20px;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+}
+
+/* Table Styling */
+.table-wrapper-1123 {
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+.contribution-table-1123 {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: #374151;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.contribution-table-1123 thead {
+  background-color: #f1f5f9;
+  text-transform: uppercase;
+}
+
+.contribution-table-1123 th,
+.contribution-table-1123 td {
+  padding: 16px 18px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.contribution-table-1123 th {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.contribution-table-1123 tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.contribution-table-1123 tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.contribution-table-1123 tr:hover {
+  background-color: #eff6ff;
+  transition: background-color 0.3s ease;
+}
+
+.text-green {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Empty State */
+.contribution-empty-1123 {
+  text-align: center;
+  color: #6b7280;
+  font-size: 16px;
+  padding: 40px 20px;
+  background-color: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  margin-top: 24px;
+  transition: all 0.3s ease;
+}
+
+.empty-icon-1123 {
+  font-size: 36px;
+  margin-bottom: 12px;
+  color: #9ca3af;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .contribution-card-1123 {
+    padding: 16px;
+  }
+
+  .contribution-title-1123 {
+    font-size: 1.2rem;
+  }
+
+  .table-wrapper-1123 {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+  }
+
+  .contribution-table-1123 {
+    font-size: 0.9rem;
+  }
+
+  .contribution-table-1123 th,
+  .contribution-table-1123 td {
+    padding: 10px 8px;
+  }
+}
+
+/* GLOBAL SEARCH BAR */
+.global-search-1123 {
+  margin-bottom: 18px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.global-search-1123 input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+.global-search-1123 input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0px 0px 5px rgba(79, 70, 229, 0.35);
+  outline: none;
+}
+
+.pagination-1123 {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pagination-1123 button {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination-1123 button:hover {
+  background: #f3f4f6;
+}
+
+.pagination-1123 button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.active-page-1123 {
+  background: #2563eb !important;
+  color: white !important;
+  border-color: #2563eb !important;
+}
+
+
+/* === Extra Small Devices (Phones < 480px) === */
+@media (max-width: 480px) {
+  .contribution-container-1123 {
+    padding: 10px;
+  }
+
+  .contribution-card-1123 {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .contribution-title-1123 {
+    font-size: 1.1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .contribution-table-1123 th,
+  .contribution-table-1123 td {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+  }
+
+  .table-wrapper-1123 {
+    overflow-x: auto;
+  }
+
+  /* Make scrollbar minimal */
+  .table-wrapper-1123::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .table-wrapper-1123::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+  }
+}
+
+/* === Animation === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

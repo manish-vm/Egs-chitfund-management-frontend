@@ -1,0 +1,508 @@
+/* Root layout */
+.admin-user-detail {
+  padding: 30px 40px;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  min-height: 100vh;
+  margin-top: 100px;
+}
+
+/* Header */
+.aud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.aud-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.aud-title h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.aud-sub {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+
+/* Buttons */
+.btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #1d4ed8;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1.5px solid #2563eb;
+  color: #2563eb;
+}
+
+.btn.ghost:hover {
+  color: black;
+}
+
+.btn.approve {
+  background: #16a34a;
+}
+
+.btn.approve:hover {
+  background: #15803d;
+}
+
+.btn.reject {
+  background: #dc2626;
+}
+
+.btn.reject:hover {
+  background: #b91c1c;
+}
+
+/* Layout grid */
+.aud-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  padding: 25px 30px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin-bottom: 18px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Rows */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: 500;
+  color: #334155;
+  width: 35%;
+}
+
+.value {
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.value input {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.value input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.doc-link {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.doc-link:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+.muted {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Status */
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-pill {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pill.pending {
+  background: #fef9c3;
+  color: #92400e;
+}
+
+.status-pill.verified {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-pill.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.card-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+/* Back Button Styling */
+.back-btn {
+  background-color: #007bff;
+  margin-top: 20px;
+  width: 50%;
+  text-align: center;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  gap: 6px;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+}
+
+.back-btn:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+.back-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+/* --- General Report Section Styling --- */
+
+.user-report{
+  margin-top: 20px;
+
+}
+.report-section {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.report-section h4 {
+  font-size: 1.2rem;
+  color: #2b2d42;
+  font-weight: 600;
+  border-bottom: 2px solid #007bff;
+  display: inline-block;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+/* --- Muted Text (Empty State) --- */
+.muted {
+  color: #6c757d;
+  font-style: italic;
+  text-align: center;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+/* --- Table Styling --- */
+.small-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin-top: 10px;
+}
+
+.small-table thead {
+  background: #007bff;
+  color: white;
+}
+
+.small-table th, 
+.small-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.small-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.small-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.small-table tbody tr:hover {
+  background-color: #f1f7ff;
+  transition: background-color 0.2s ease;
+}
+
+/* --- Payment Status --- */
+.payment-status {
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-align: center;
+  display: inline-block;
+  min-width: 90px;
+}
+
+.payment-status.PAID {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.payment-status.PENDING {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+.payment-status.FAILED,
+.payment-status.REJECTED {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+
+/* ---------- File actions & mini controls ---------- */
+.file-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.file-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.file-actions .doc-link,
+.file-actions .doc-download,
+.file-actions .btn {
+  display: inline-block;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.file-actions .doc-link {
+  background: #eef6ff;
+  color: #0b5ed7;
+  border: 1px solid rgba(11, 94, 215, 0.08);
+}
+
+.file-actions .doc-download {
+  background: #fff8e6;
+  color: #b35b00;
+  border: 1px solid rgba(179, 91, 0, 0.08);
+}
+
+.file-actions .btn.ghost,
+.file-actions .btn.small {
+  background: transparent;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.file-actions .btn.small {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* Muted / placeholder text */
+.muted {
+  color: #8a8a8a;
+  font-size: 13px;
+}
+
+/* Row/file block spacing inside docs list */
+.docs-card .row .value.file-block {
+  gap: 6px;
+}
+
+/* ---------- Image preview modal ---------- */
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(12, 20, 30, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.preview-inner {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.4);
+  padding: 16px;
+  max-width: 92%;
+  max-height: 92%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* make image responsive within modal */
+.preview-inner img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(80vh - 40px);
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+/* small button row under the image */
+.preview-inner .btn {
+  margin-left: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #0b5ed7;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.preview-inner .btn.ghost {
+  background: transparent;
+  color: #444;
+  border: 1px solid #ddd;
+}
+
+/* ---------- small helpers ---------- */
+.status-pill {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.status-pill.pending { background:#fff4e6; color:#b35b00; }
+.status-pill.verified { background:#ecfdf5; color:#0f766e; }
+.status-pill.rejected { background:#fff1f2; color:#7f1d1d; }
+
+/* small responsive tweaks */
+@media (max-width: 720px) {
+  .file-actions { gap: 6px; }
+  .preview-inner { padding: 12px; }
+  .preview-inner .btn { padding: 7px 10px; font-size: 13px; }
+}
+
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+  .small-table th, .small-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .report-section {
+    padding: 16px;
+  }
+}
+.user-avatar { width:56px; height:56px; border-radius:8px; object-fit:cover; border:1px solid #eee; }
+
+
+
+/* Responsive */
+@media (max-width: 900px) {
+  .aud-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .value input {
+    max-width: 100%;
+  }
+}
+

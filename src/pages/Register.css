@@ -1,0 +1,310 @@
+/* Wrapper */
+.register-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to right, #bfdbfe, white, #93c5fd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Container */
+.register-container {
+  width: 100%;
+        margin-top: 90px;
+  max-width: 850px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+}
+
+/* Title */
+.register-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Alerts */
+.alert {
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.alert-error {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.alert-success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Image Upload */
+.image-upload {
+  display: flex;
+  justify-content: center;
+}
+
+.image-label {
+  cursor: pointer;
+  text-align: center;
+}
+
+.image-preview {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #93c5fd;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-placeholder {
+  color: #9ca3af;
+}
+
+.image-label input {
+  display: none;
+}
+
+.image-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #3b82f6;
+  font-size: 1.25rem;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 0.6rem 0.75rem 0.6rem 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.4);
+}
+
+/* Submit Button */
+.submit-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  color: rgb(10, 178, 207);
+}
+
+.submit-btn1 {
+  width: 190px;
+  padding: 0.75rem 1.5rem;
+  background: #2563eb;
+  color: rgb(11, 10, 10);
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+    transform: scale(1.05);
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn1:hover {
+  background: #1d4ed8;
+  transform: scale(1.05);
+  color:white;
+}
+/* Container to center the button */
+.submit-container900 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  margin-top: 30px;
+  width: 190px;
+    border-radius: 50px;
+    margin-left: 310px;
+
+}
+
+/* Premium Button Style */
+.register-btn900 {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: rgb(255, 255, 255);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0px 6px 20px rgba(37, 99, 235, 0.3);
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+/* Active Click Effect */
+.register-btn900:active {
+  transform: translateY(0px);
+  box-shadow: 0px 4px 15px rgba(37, 99, 235, 0.2);
+}
+
+/* Login link */
+.login-link {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-top: 1.5rem;
+}
+
+.login-link a {
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+/* === Mobile Responsive Enhancements === */
+@media (max-width: 768px) {
+  /* Form Grid: stack fields vertically */
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Container adjustments */
+  .register-container {
+    width: 95%;
+    padding: 1.5rem;
+    margin-top: 60px;
+  }
+
+  /* Title size */
+  .register-title {
+    font-size: 1.6rem;
+  }
+
+  /* Image upload */
+  .image-preview {
+    width: 80px;
+    height: 80px;
+    border-width: 3px;
+  }
+
+  .image-text {
+    font-size: 0.7rem;
+  }
+
+  /* Input fields */
+  .input-wrapper input {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+  }
+
+  .input-icon {
+    font-size: 1.1rem;
+    left: 0.5rem;
+  }
+
+  /* Submit button container */
+  .submit-container900 {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+    padding-top: 1rem;
+  }
+
+  .register-btn900 {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+
+  /* Login link */
+  .login-link {
+    font-size: 0.85rem;
+  }
+}
+
+/* Extra small devices < 480px */
+@media (max-width: 480px) {
+  .register-container {
+    padding: 1rem;
+    margin-top: 100px;
+    margin-bottom: 30px;
+  }
+
+  .register-title {
+    font-size: 1.4rem;
+  }
+
+  .image-preview {
+    width: 70px;
+    height: 70px;
+  }
+
+  .image-text {
+    font-size: 0.65rem;
+  }
+
+  .input-wrapper input {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.7rem 0.45rem 2rem;
+  }
+
+  .input-icon {
+    font-size: 1rem;
+    left: 0.4rem;
+  }
+
+  .submit-container900, .register-btn900{
+    padding: 10px;
+  }
+
+  .register-btn900:hover{
+    background-color: #3b82f6;
+  }
+}
+

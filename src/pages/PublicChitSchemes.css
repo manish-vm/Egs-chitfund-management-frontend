@@ -1,0 +1,311 @@
+/* ─────────────────────────────────────────────────────────── */
+/* PAGE WRAPPER */
+/* ─────────────────────────────────────────────────────────── */
+.public-scheme-container {
+  padding: 50px 20px;
+  max-width: 1250px;
+  margin: auto;
+  animation: fadeIn 0.7s ease-in-out;
+  height: 1000px;
+  overflow-y: scroll;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* HEADER */
+/* ─────────────────────────────────────────────────────────── */
+.public-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.public-header h2 {
+  font-size: 30px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-icon {
+  width: 32px;
+  height: 32px;
+  color: #3173ff;
+}
+
+.public-header p {
+  color: #666;
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* GRID */
+/* ─────────────────────────────────────────────────────────── */
+.public-scheme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 28px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* CARD */
+/* ─────────────────────────────────────────────────────────── */
+.public-scheme-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e7e7e7;
+  cursor: pointer;
+  transition: 0.25s ease;
+  position: relative;
+  width: 400px;
+}
+
+.public-scheme-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.13);
+  border-color: #cfd8ff;
+}
+
+/* Title */
+.scheme-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #1f1f1f;
+  letter-spacing: 0.3px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* SCHEME DETAILS */
+/* ─────────────────────────────────────────────────────────── */
+.scheme-details {
+  margin-bottom: 22px;
+  padding: 12px 0;
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+.detail-item .icon {
+  width: 20px;
+  margin-right: 10px;
+  color: #3a3a3a;
+}
+
+.detail-item span {
+  color: #555;
+  font-weight: 500;
+}
+
+.detail-item strong {
+  margin-left: auto;
+  color: #000;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* BUTTONS */
+/* ─────────────────────────────────────────────────────────── */
+.public-button-area {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.view-btn,
+.join-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: 0.25s;
+}
+
+/* View Details Button */
+.view-btn {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.view-btn:hover {
+  background: #e6e6e6;
+}
+
+/* Join / Register Button */
+.join-btn {
+  background: linear-gradient(135deg, #3578ff, #1d5af9);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.join-btn:hover {
+  background: linear-gradient(135deg, #2467ff, #144ce0);
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  width: 16px;
+  margin-right: 7px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* EMPTY / LOADING */
+/* ─────────────────────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  padding: 40px 0;
+  color: #555;
+}
+
+.no-schemes {
+  text-align: center;
+  padding: 40px 0;
+  color: #777;
+  font-size: 17px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* PAGE WRAPPER */
+/* ─────────────────────────────────────────────────────────── */
+.public-scheme-container {
+  padding: 40px 15px; /* Reduced for small screens */
+  max-width: 1250px;
+  margin: auto;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* HEADER */
+/* ─────────────────────────────────────────────────────────── */
+.public-header h2 {
+  font-size: 28px;
+  flex-wrap: wrap; /* allows icon & text to wrap on small screens */
+}
+
+.public-header p {
+  font-size: 14px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* GRID */
+/* ─────────────────────────────────────────────────────────── */
+.public-scheme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* smaller min width for mobiles */
+  gap: 20px; /* reduced gap for mobile screens */
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* CARD */
+/* ─────────────────────────────────────────────────────────── */
+.public-scheme-card {
+  width: 100%; /* full width inside grid column */
+  padding: 20px;
+}
+
+/* Title */
+.scheme-title {
+  font-size: 20px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* SCHEME DETAILS */
+/* ─────────────────────────────────────────────────────────── */
+.detail-item {
+  font-size: 14px; /* slightly smaller on mobile */
+}
+
+.detail-item strong {
+  font-size: 15px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* BUTTONS */
+/* ─────────────────────────────────────────────────────────── */
+.public-button-area {
+  flex-direction: column; /* stack buttons on mobile */
+  gap: 10px;
+}
+
+.view-btn,
+.join-btn {
+  width: 100%; /* full width for mobile */
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* RESPONSIVE MEDIA QUERIES */
+/* ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .public-header h2 {
+    font-size: 24px;
+  }
+
+  .scheme-title {
+    font-size: 18px;
+  }
+
+  .detail-item {
+    font-size: 13px;
+  }
+
+  .detail-item strong {
+    font-size: 14px;
+  }
+
+  .public-button-area {
+    flex-direction: column;
+  }
+
+  .view-btn,
+  .join-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .public-header h2 {
+    font-size: 22px;
+  }
+
+  .public-header p {
+    font-size: 13px;
+  }
+
+  .scheme-title {
+    font-size: 16px;
+  }
+
+  .detail-item {
+    font-size: 12px;
+  }
+
+  .detail-item strong {
+    font-size: 13px;
+  }
+}

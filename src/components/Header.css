@@ -1,0 +1,176 @@
+/* ===========================
+   Premium Header Styling
+   =========================== */
+.header-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #253966, #356eca);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* Hide on scroll down */
+.header-container.hide {
+  transform: translateY(-100%);
+}
+
+/* Show on scroll up */
+.header-container.show {
+  transform: translateY(0);
+}
+
+.header-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo styling */
+.header-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  color: #facc15;
+}
+
+.logo-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+/* Navigation */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* User Section */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.user-profile:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.user-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #13607c;
+}
+
+.user-placeholder {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #facc15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.user-name {
+  font-size: 0.95rem;
+  color: white;
+  font-weight: 500;
+}
+/* Common styles for both buttons */
+.login-button1,
+.logout-button1 {
+  display: inline-block;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+/* Normal size Logout button style */
+.logout-button1 {
+  background-color: #0aa1cb; /* Red */
+  color: white;
+  padding: 10px 18px;
+  font-size: 16px;
+}
+
+.logout-button1:hover {
+  background-color: #a71d2a;
+  transform: scale(1.05);
+}
+
+/* Mobile view adjustments */
+@media (max-width: 600px) {
+  .login-button1 {
+    padding: 16px 30px;
+    font-size: 18px;
+  }
+
+  .logout-button1 {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+
+/* ===========================
+   Mobile Styling
+   =========================== */
+@media screen and (max-width: 768px) {
+  .header-wrapper {
+    padding: 0.6rem 1rem;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .nav-menu {
+    gap: 0.6rem;
+  }
+
+  .user-name {
+    display: none; /* Hide text for mobile, show only image/icon */
+  }
+
+  .user-profile {
+    gap: 0.3rem;
+    padding: 0.3rem;
+  }
+
+  .login-button,
+  .logout-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}

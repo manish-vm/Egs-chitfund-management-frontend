@@ -1,0 +1,301 @@
+/* === General Page Layout === */
+.page-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #222;
+}
+
+/* === Card Styles === */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.card-header h2 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #333;
+}
+
+.card-body .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-weight: 600;
+  color: #555;
+}
+
+.value {
+  font-weight: 500;
+  color: #111;
+  word-break: break-all;
+}
+
+.spacer {
+  height: 20px;
+}
+
+.muted {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* === Buttons === */
+.btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.95rem;
+}
+
+.btn:hover {
+  background: #1e4ed8;
+}
+
+.btn.ghost {
+  background: #f3f4f6;
+  color: #333;
+}
+
+.btn.ghost:hover {
+  background: #e5e7eb;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* === Status Badges === */
+.status-badge {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fff5cc;
+  color: #8a6d1d;
+}
+
+.status-info {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.status-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* === Success / Error Blocks === */
+.success-block,
+.error-block {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.success-block {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.error-block {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* === Manual Payment Section === */
+.manual-payment-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.manual-payment-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+  color: #222;
+}
+
+.manual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-weight: 600;
+  color: #444;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-row input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.input-row input:focus {
+  outline: 2px solid #2563eb;
+  background: #fff;
+}
+
+.manual-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* === QR Section === */
+.qr-section {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.qr-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.qr-image img {
+  width: 220px;
+  height: 220px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  background: #fff;
+  padding: 6px;
+}
+
+.qr-instructions {
+  max-width: 420px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 50px;
+}
+
+/* === Error Card === */
+.error-card {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .page-container {
+    margin: 20px auto;
+    padding: 10px;
+    overflow: scroll;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .manual-grid {
+    grid-template-columns: 1fr;
+  }
+  .input-row{
+    width: 50%;
+
+  }
+  .qr-section {
+    grid-column: 1;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .input-row {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-header h2 {
+    font-size: 1.2rem;
+  }
+  .value {
+    font-size: 0.95rem;
+  }
+
+  .manual-payment-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .qr-image img {
+    width: 180px;
+    height: 180px;
+  }
+}

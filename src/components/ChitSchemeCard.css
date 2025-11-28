@@ -1,0 +1,75 @@
+.chit-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid #bfdbfe;
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.chit-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.chit-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+}
+
+.chit-badge span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #2563eb;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.chit-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #dbeafe;
+  padding-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.chit-card:hover .chit-title {
+  color: #1d4ed8;
+}
+
+.chit-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #374151;
+}
+
+.chit-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+}
+
+.chit-icon {
+  color: #2563eb;
+  font-size: 1.1rem;
+}
+
+.chit-label {
+  font-weight: 500;
+}
+
+.chit-value {
+  font-weight: 600;
+  color: #111827;
+}
