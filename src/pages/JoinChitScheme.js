@@ -10,7 +10,8 @@ import {
   CheckCircle,
   Plus,
   ShieldCheck,
-  XCircle
+  XCircle,
+  CalendarDays
 } from 'lucide-react';
 import './JoinChitScheme.css';
 
@@ -173,7 +174,7 @@ const JoinChitScheme = () => {
                     </div>
 
                      <div className="detail-item">
-                      <Clock className="icon" />
+                      <CalendarDays className="icon" />
                       <span>Start Date:</span>
                       <strong>{fmtDate(scheme.startDate || scheme.createdAt || scheme.launchDate)}</strong>
                     </div>
