@@ -1,6 +1,6 @@
 // src/pages/ChitDetails.jsx
 import React, { useEffect, useState, useCallback } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import api from '../services/api'; // your axios instance
 import { getChitById } from '../services/chit';
@@ -10,7 +10,12 @@ import './ChitDetails.css';
 const money = (v) => Number(v || 0).toLocaleString('en-IN');
 const COMMISSION_PERCENT = 0.05;
 
-/* helpers (computeFromTCVandBid, monthKeyFromDate, toNum, deriveMonthsTotal) omitted for brevity — keep your existing functions */
+/**
+ * computeFromTCVandBid:
+ * - commission = 5% of TCV (fixed)
+ * - distributed = TCV - bid
+ * - walletFromBid = bid - commission
+ */
 const computeFromTCVandBid = (tcv = 0, bid = 0) => {
   const TCV = Number(tcv || 0);
   const RCA = Number(bid || 0);
@@ -21,11 +26,14 @@ const computeFromTCVandBid = (tcv = 0, bid = 0) => {
   return { TCV, RCA, commission, GWB, walletFromBid, distributed };
 };
 
+
+// safe number
 const toNum = (v) => {
   const n = Number(v);
   return Number.isFinite(n) ? n : 0;
 };
 
+// derive total months for a chit (defensive)
 const deriveMonthsTotal = (chit = {}) => {
   const candidates = [
     chit.durationInMonths,
@@ -41,102 +49,32 @@ const deriveMonthsTotal = (chit = {}) => {
   return null;
 };
 
-// robust contributor helpers (same improved logic suggested earlier)
-const normIdStr = (v) => {
-  if (v === null || typeof v === 'undefined') return '';
-  if (typeof v === 'object') {
-    try { return String(v._id || v.id || v.toString()).trim(); } catch (e) { return String(v).trim(); }
-  }
-  return String(v).trim();
-};
-const pickFirst = (obj, paths = []) => {
-  if (!obj) return undefined;
-  for (const p of paths) {
-    const parts = p.split('.');
-    let cur = obj;
-    let ok = true;
-    for (const part of parts) {
-      if (cur && (typeof cur === 'object') && (part in cur)) {
-        cur = cur[part];
-      } else {
-        ok = false;
-        break;
-      }
-    }
-    if (ok && typeof cur !== 'undefined' && cur !== null && String(cur).trim() !== '') return cur;
-  }
-  return undefined;
-};
-const contributionContributorId = (p) => {
-  if (!p) return null;
-  const candidatePaths = [
-    'user._id', 'user', 'userId', 'payer._id', 'payer', 'member', 'memberId',
-    'contributor', 'createdBy', 'createdBy._id', 'payerId'
-  ];
-  for (const path of candidatePaths) {
-    const v = pickFirst(p, [path]);
-    if (typeof v !== 'undefined' && v !== null && String(v).trim() !== '') {
-      return normIdStr(v);
-    }
-  }
-  if (p.user && typeof p.user === 'object') {
-    if (p.user._id) return normIdStr(p.user._id);
-    if (p.user.id) return normIdStr(p.user.id);
-    if (p.user.email) return normIdStr(p.user.email);
-  }
-  const email = pickFirst(p, ['user.email', 'payerEmail', 'email', 'payer.email']);
-  if (email) return normIdStr(email);
-  return null;
-};
-const isContributionPaid = (c) => {
-  if (!c) return false;
-  if (typeof c.status === 'string') {
-    const s = c.status.toLowerCase();
-    if (['success', 'completed', 'paid', 'ok'].includes(s)) return true;
-  }
-  if (typeof c.success !== 'undefined') return Boolean(c.success);
-  if (typeof c.paid !== 'undefined') return Boolean(c.paid);
-  if (typeof c.isPaid !== 'undefined') return Boolean(c.isPaid);
-  const amount = toNum(c.amount ?? c.paidAmount ?? c.value ?? c.paymentAmount ?? 0);
-  if (amount > 0 && (c.paidDate || c.createdAt || c.updatedAt || c.paymentDate)) return true;
-  return false;
-};
-const contributionChitId = (p) => {
-  if (!p) return null;
-  const candidate = pickFirst(p, ['chitId._id', 'chitId', 'chit', 'chit._id', 'chitId.id']);
-  return candidate ? normIdStr(candidate) : null;
-};
+// count months paid for a specific member on a chit
+const countMemberMonthsPaid = (contributions = [], schemeId) => {
+  if (!Array.isArray(contributions)) return 0;
+  return contributions.filter((p) => {
+    if (!p) return false;
+    const pid = (p.chitId && (p.chitId._id || p.chitId)) || p.chit || p.chitId;
+    const matches = String(pid || '').toString() === String(schemeId).toString();
+    if (!matches) return false;
 
-// count months paid for a specific member on a chit (memberId optional)
-const countMemberMonthsPaid = (contributions = [], schemeId, memberId, memberEmail) => {
-  if (!Array.isArray(contributions) || (!memberId && !memberEmail)) return 0;
-  const schemeIdStr = normIdStr(schemeId);
-  let matched = 0;
-  for (const p of contributions) {
-    if (!p) continue;
-    const pChit = contributionChitId(p);
-    if (!pChit) continue;
-    if (schemeIdStr && normIdStr(pChit) !== schemeIdStr) continue;
-    const cid = contributionContributorId(p);
-    let contributorMatches = false;
-    if (cid) {
-      if (memberId && normIdStr(cid) === normIdStr(memberId)) contributorMatches = true;
-      else if (memberEmail && cid.toLowerCase() === memberEmail.toLowerCase()) contributorMatches = true;
+    if (typeof p.status === 'string') {
+      const s = p.status.toLowerCase();
+      return ['success', 'completed', 'paid'].includes(s);
     }
-    if (!contributorMatches && memberEmail) {
-      const contribEmail = pickFirst(p, ['user.email', 'payerEmail', 'email', 'payer.email']);
-      if (contribEmail && String(contribEmail).toLowerCase() === String(memberEmail).toLowerCase()) contributorMatches = true;
-    }
-    if (!contributorMatches) continue;
-    if (!isContributionPaid(p)) continue;
-    matched += 1;
-  }
-  return matched;
+    if (typeof p.success !== 'undefined') return Boolean(p.success);
+    if (typeof p.paid !== 'undefined') return Boolean(p.paid);
+    if (toNum(p.amount) > 0 && (p.paidDate || p.createdAt || p.updatedAt)) return true;
+    return false;
+  }).length;
 };
 
 /* -------------------- Member resolver -------------------- */
 const resolveMemberData = (u) => {
+  // returns { id, name, email }
   if (!u) return { id: null, name: null, email: null };
+
+  // wrapper object like { user: {...}, isApproved: true }
   if (typeof u === 'object' && u.user) {
     const user = typeof u.user === 'object' ? u.user : null;
     return {
@@ -145,12 +83,18 @@ const resolveMemberData = (u) => {
       email: user?.email || ''
     };
   }
+
+  // plain user object
   if (typeof u === 'object' && (u._id || u.name || u.email)) {
     return { id: u._id || u.id || null, name: u.name || 'Member', email: u.email || '' };
   }
+
+  // string id / ObjectId
   if (typeof u === 'string') {
     return { id: u, name: 'Member', email: '' };
   }
+
+  // fallback
   return { id: null, name: String(u), email: '' };
 };
 
@@ -158,10 +102,6 @@ const resolveMemberData = (u) => {
 const ChitDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation();
-  const search = new URLSearchParams(location.search);
-  // memberId passed from AdminUserDetail link: /admin/chits/:chitId?memberId=<userId>
-  const memberIdFromQuery = search.get('memberId') || null;
 
   const [chit, setChit] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -173,11 +113,15 @@ const ChitDetails = () => {
   const [bidAmount, setBidAmount] = useState('');
   const [walletAmount, setWalletAmount] = useState('');
 
+  // persisted rows from DB
   const [generatedRows, setGeneratedRows] = useState([]);
+
+  // Editing state for generated rows
   const [editingRowId, setEditingRowId] = useState(null);
   const [editValues, setEditValues] = useState({ bidAmount: '', walletAmount: '', distributed: '' });
   const [rowActionLoading, setRowActionLoading] = useState(false);
 
+  // contributions for this chit (used for per-member months paid)
   const [contributionsForChit, setContributionsForChit] = useState([]);
   const [contribsLoading, setContribsLoading] = useState(false);
 
@@ -187,14 +131,22 @@ const ChitDetails = () => {
     navigate(`/admin/users/${memberId}`);
   };
 
+  // Helper: determine released amount encoded in a row.
   const getReleasedAmountFromRow = (r) => {
     if (!r) return 0;
-    if (typeof r.releasedAmount !== 'undefined' && r.releasedAmount !== null) return Number(r.releasedAmount || 0);
-    if (typeof r.released !== 'undefined' && r.released !== null && !isNaN(Number(r.released))) return Number(r.released || 0);
-    if (r.isRelease || r.isReleased) return Number(r.distributed || 0);
+    if (typeof r.releasedAmount !== 'undefined' && r.releasedAmount !== null) {
+      return Number(r.releasedAmount || 0);
+    }
+    if (typeof r.released !== 'undefined' && r.released !== null && !isNaN(Number(r.released))) {
+      return Number(r.released || 0);
+    }
+    if (r.isRelease || r.isReleased) {
+      return Number(r.distributed || 0);
+    }
     return 0;
   };
 
+  // load persisted rows for a given chitId (fetches from DB), compute cumulative & remaining after releases
   const loadGeneratedRows = useCallback(async (chitId, tcv = 0) => {
     if (!chitId) {
       setGeneratedRows([]);
@@ -204,7 +156,7 @@ const ChitDetails = () => {
     setError('');
     setServerDebug(null);
     try {
-      const rows = await fetchGeneratedRows(chitId, null);
+      const rows = await fetchGeneratedRows(chitId, null); // expects array or throws
       if (!Array.isArray(rows) || rows.length === 0) {
         setGeneratedRows([]);
         return;
@@ -219,6 +171,7 @@ const ChitDetails = () => {
         releasedAmountNum: Number(getReleasedAmountFromRow(r) || 0),
       }));
 
+      // ascending oldest-first for cumulative calc
       norm.sort((a, b) => {
         const da = a.parsedDate ? a.parsedDate.getTime() : 0;
         const db = b.parsedDate ? b.parsedDate.getTime() : 0;
@@ -261,6 +214,7 @@ const ChitDetails = () => {
         };
       });
 
+      // newest first in UI
       withCum.sort((a, b) => {
         const da = a.parsedDate ? a.parsedDate.getTime() : 0;
         const db = b.parsedDate ? b.parsedDate.getTime() : 0;
@@ -279,6 +233,7 @@ const ChitDetails = () => {
     }
   }, []);
 
+  // load contributions for this chit (used to compute per-member months paid)
   const loadContributionsForChit = useCallback(async (chitId) => {
     if (!chitId) {
       setContributionsForChit([]);
@@ -343,6 +298,7 @@ const ChitDetails = () => {
         setBidAmount(String(Math.round(incomingBid)));
         setWalletAmount(String(Math.round(walletFromBid)));
 
+        // load persisted generated rows and contributions for this chit
         await loadGeneratedRows(data._id || id, tcv);
         await loadContributionsForChit(data._id || id);
       } catch (err) {
@@ -358,6 +314,7 @@ const ChitDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, loadGeneratedRows, loadContributionsForChit]);
 
+  // refresh on window focus
   useEffect(() => {
     const onFocus = () => {
       const cid = chit?._id || id;
@@ -371,6 +328,7 @@ const ChitDetails = () => {
     return () => window.removeEventListener('focus', onFocus);
   }, [chit, id, loadGeneratedRows, loadContributionsForChit]);
 
+  // when admin edits bid -> wallet becomes (bid - commission)
   const handleBidChange = (val) => {
     setBidAmount(val);
     const numericBid = Number(val || 0);
@@ -379,6 +337,8 @@ const ChitDetails = () => {
     setWalletAmount(String(Math.round(walletFromBid)));
   };
 
+  // when admin edits wallet -> compute bid using inverse:
+  // wallet = bid - commission  => bid = wallet + commission
   const handleWalletChange = (val) => {
     setWalletAmount(val);
     const walletNum = Number(val || 0);
@@ -388,6 +348,7 @@ const ChitDetails = () => {
     setBidAmount(String(Math.round(newBid)));
   };
 
+  // Generate chit: update chit on backend, then create persisted generated row, then reload rows from DB
   const handleGenerate = async () => {
     if (!chit) {
       setError('No chit loaded');
@@ -415,6 +376,7 @@ const ChitDetails = () => {
     setServerDebug(null);
 
     try {
+      // update chit (release/patch/put fallback)
       let resp = null;
       try {
         resp = await api.patch(`/chit/${id}/release`, payloadForChit);
@@ -429,6 +391,7 @@ const ChitDetails = () => {
       const updatedChit = (data && data.chit) ? data.chit : (data && data.updated ? data.updated : null);
       if (updatedChit) setChit(updatedChit);
 
+      // create persisted generated row
       const createPayload = {
         chitName: chit.name || chit.chitName || '',
         walletAmount: computed.walletFromBid,
@@ -437,6 +400,8 @@ const ChitDetails = () => {
       };
 
       await createGeneratedRow(chit._id || id, createPayload);
+
+      // reload rows and contributions from DB so UI reflects persisted state only (and we recalc cumulative)
       await loadGeneratedRows(chit._id || id, tcv);
       await loadContributionsForChit(chit._id || id);
 
@@ -454,6 +419,7 @@ const ChitDetails = () => {
     }
   };
 
+  // Update generated row on server
   const updateGeneratedRow = async (row) => {
     if (!row || !row._id) {
       alert('Row id missing');
@@ -489,6 +455,7 @@ const ChitDetails = () => {
     }
   };
 
+  // Delete generated row on server
   const deleteGeneratedRow = async (row) => {
     if (!row || !row._id) {
       alert('Row id missing');
@@ -504,6 +471,7 @@ const ChitDetails = () => {
       if (resp?.data?.success || resp?.status === 200 || resp?.status === 204) {
         const tcv = Number(chit?.totalAmount ?? chit?.amount ?? 0);
         await loadGeneratedRows(chit._id || id, tcv);
+        // reload contributions as well in case deletion affects payouts
         await loadContributionsForChit(chit._id || id);
         alert('Row deleted');
       } else {
@@ -519,6 +487,7 @@ const ChitDetails = () => {
     }
   };
 
+  // Start editing: prefill values
   const startEditRow = (row) => {
     setEditingRowId(row._id);
     setEditValues({
@@ -529,6 +498,7 @@ const ChitDetails = () => {
     });
   };
 
+  // Cancel editing
   const cancelEdit = () => {
     setEditingRowId(null);
     setEditValues({ bidAmount: '', walletAmount: '', distributed: '' });
@@ -545,6 +515,7 @@ const ChitDetails = () => {
 
   const tcv = Number(chit.totalAmount ?? chit.amount ?? 0);
   const bidNum = Number(bidAmount || 0);
+  // const walletNum = Number(walletAmount || 0);
   const { commission, GWB, distributed } = computeFromTCVandBid(tcv, bidNum);
 
   const totalMembers =
@@ -588,7 +559,7 @@ const ChitDetails = () => {
           <div className="members-card">
             <h3>Members ({totalMembers})</h3>
 
-            {/* If admin navigated here for a particular member, show that member highlighted */}
+            {/* Members list: show name, months paid & months pending */}
             <ul className="members-list">
               {(Array.isArray(chit.joinedUsers) && chit.joinedUsers.length > 0) ? (
                 chit.joinedUsers.map((u, idx) => {
@@ -597,32 +568,25 @@ const ChitDetails = () => {
                   const clickable = !!member.id;
 
                   // compute monthsPaid & monthsPending using contributionsForChit
-                  // important: use memberIdFromQuery as fallback to focus on specific user
-                  const targetMemberId = memberIdFromQuery || member.id;
-                  const monthsPaid = targetMemberId ? countMemberMonthsPaid(contributionsForChit, chit._id || id, targetMemberId, member.email) : 0;
+                  const monthsPaid = member.id ? countMemberMonthsPaid(contributionsForChit, chit._id || id, member.id) : 0;
                   const monthsTotal = deriveMonthsTotal(chit);
                   const monthsPending = (typeof monthsTotal === 'number' && monthsTotal >= 0)
                     ? Math.max(0, monthsTotal - monthsPaid)
                     : '—';
 
-                  const isTarget = memberIdFromQuery && normIdStr(memberIdFromQuery) === normIdStr(member.id);
-
                   return (
                     <li
                       key={key}
-                      className={`member-row ${isTarget ? 'member-highlight' : ''}`}
+                      className="member-row"
                       role={clickable ? 'button' : 'listitem'}
                       tabIndex={clickable ? 0 : -1}
                       onClick={() => clickable && handleMemberClick(u)}
                       onKeyDown={(e) => { if (clickable && (e.key === 'Enter' || e.key === ' ')) handleMemberClick(u); }}
-                      style={{ cursor: clickable ? 'pointer' : 'default', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                      style={{ cursor: clickable ? 'pointer' : 'default' }}
                     >
-                      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                        <div className="member-name">{member.name || 'Member'}</div>
-                        {isTarget && <div className="muted" style={{ fontSize: 12 }}> (Filtered user)</div>}
-                      </div>
+                      <div className="member-name">{member.name || 'Member'}</div>
 
-                      <div style={{ display: 'flex', gap: 18, alignItems: 'center' }}>
+                      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                         <div className="member-meta-sucess"><strong>Dues Paid:</strong> {monthsPaid}</div>
                         <div className="member-meta-danger"><strong>Dues Pending:</strong> {monthsPending}</div>
                       </div>
@@ -634,30 +598,27 @@ const ChitDetails = () => {
                   const member = resolveMemberData(m);
                   const key = member.id || `${member.name}-${idx}`;
                   const clickable = !!member.id;
-                  const targetMemberId = memberIdFromQuery || member.id;
-                  const monthsPaid = targetMemberId ? countMemberMonthsPaid(contributionsForChit, chit._id || id, targetMemberId, member.email) : 0;
+
+                  // similar computation for currentMembers
+                  const monthsPaid = member.id ? countMemberMonthsPaid(contributionsForChit, chit._id || id, member.id) : 0;
                   const monthsTotal = deriveMonthsTotal(chit);
                   const monthsPending = (typeof monthsTotal === 'number' && monthsTotal >= 0)
                     ? Math.max(0, monthsTotal - monthsPaid)
                     : '—';
-                  const isTarget = memberIdFromQuery && normIdStr(memberIdFromQuery) === normIdStr(member.id);
 
                   return (
                     <li
                       key={key}
-                      className={`member-row ${isTarget ? 'member-highlight' : ''}`}
+                      className="member-row"
                       role={clickable ? 'button' : 'listitem'}
                       tabIndex={clickable ? 0 : -1}
                       onClick={() => clickable && handleMemberClick(m)}
                       onKeyDown={(e) => { if (clickable && (e.key === 'Enter' || e.key === ' ')) handleMemberClick(m); }}
-                      style={{ cursor: clickable ? 'pointer' : 'default', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                      style={{ cursor: clickable ? 'pointer' : 'default' }}
                     >
-                      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                        <div className="member-name">{member.name || 'Member'}</div>
-                        {isTarget && <div className="muted" style={{ fontSize: 12 }}> (Filtered user)</div>}
-                      </div>
+                      <div className="member-name">{member.name || 'Member'}</div>
 
-                      <div style={{ display: 'flex', gap: 18, alignItems: 'center' }}>
+                      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                         <div className="member-meta"><strong>Months Paid:</strong> {monthsPaid}</div>
                         <div className="member-meta"><strong>Months Pending:</strong> {monthsPending}</div>
                       </div>
@@ -673,9 +634,9 @@ const ChitDetails = () => {
           </div>
         </section>
 
-        {/* rest of ChitDetails unchanged (auction/wallet, generated rows etc.) */}
         <section className="chit-breakdown">
           <h3>Auction / Wallet (Admin editable)</h3>
+
           <div className="breakdown-grid">
             <div className="breakdown-item">
               <div className="label">Total Chit Amount (TCV) — fixed</div>
@@ -733,6 +694,7 @@ const ChitDetails = () => {
           {serverDebug && <pre style={{ marginTop: 8, whiteSpace: 'pre-wrap' }}>{JSON.stringify(serverDebug, null, 2)}</pre>}
         </section>
 
+        {/* Generated chit table */}
         <section className="chit-table-container" style={{ marginTop: 24 }}>
           <h3 className="chit-table-title">Generated Chit Rows (persisted)</h3>
 
@@ -771,19 +733,19 @@ const ChitDetails = () => {
                       </td>
                       <td style={{ whiteSpace: 'nowrap' }}>
                         {editingRowId === r._id ? (
-                          <>
+                          <> Bid
                             <input
                               style={{ width: 80, marginRight: 6 }}
                               value={editValues.bidAmount}
                               onChange={(e) => setEditValues(prev => ({ ...prev, bidAmount: e.target.value }))}
                               placeholder="Bid"
-                            />
+                            /> Wallet
                             <input
                               style={{ width: 80, marginRight: 6 }}
                               value={editValues.walletAmount}
                               onChange={(e) => setEditValues(prev => ({ ...prev, walletAmount: e.target.value }))}
                               placeholder="Wallet"
-                            />
+                            />Distributed
                             <input
                               style={{ width: 80, marginRight: 6 }}
                               value={editValues.distributed}
