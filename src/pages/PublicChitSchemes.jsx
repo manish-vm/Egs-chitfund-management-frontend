@@ -4,10 +4,10 @@ import { getAllChitSchemes } from "../services/chit";
 import { useNavigate } from "react-router-dom";
 import {
   IndianRupee,
-  UsersRound,
   Clock,
   ShieldCheck,
   Plus,
+  CalendarDays
 } from "lucide-react";
 import "./PublicChitSchemes.css";
 
@@ -15,6 +15,17 @@ const PublicChitSchemes = () => {
   const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+   const fmtDate = (d) => {
+    if (!d) return '—';
+    try {
+      const dt = new Date(d);
+      if (Number.isNaN(dt.getTime())) return '—';
+      return dt.toLocaleDateString();
+    } catch {
+      return '—';
+    }
+  };
 
   useEffect(() => {
     const fetchSchemes = async () => {
@@ -63,10 +74,10 @@ const PublicChitSchemes = () => {
                   </div>
 
                   <div className="detail-item">
-                    <UsersRound className="icon" />
-                    <span>Members:</span>
+                    <CalendarDays  className="icon" />
+                    <span>Start Date:</span>
                     <strong>
-                      {scheme.totalMembers}
+                      {fmtDate(scheme.startDate || scheme.createdAt || scheme.launchDate)}
                     </strong>
                   </div>
 
