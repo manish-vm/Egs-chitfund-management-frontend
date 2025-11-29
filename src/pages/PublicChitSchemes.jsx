@@ -66,7 +66,7 @@ const PublicChitSchemes = () => {
                     <UsersRound className="icon" />
                     <span>Members:</span>
                     <strong>
-                      {joinedCount}/{scheme.totalMembers}
+                      {scheme.totalMembers}
                     </strong>
                   </div>
 
