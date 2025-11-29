@@ -11,45 +11,32 @@ import { getUserChitsAdmin, getUserPaymentsAdmin } from '../services/adminUserSe
 import api from '../services/api';
 import './AdminUserDetail.css';
 
-/**
- * buildAbsolute - turn backend path/object into absolute URL
- * Accepts:
- *  - string: '/uploads/documents/xxx.pdf' or 'http...'
- *  - object: { path, url, filename }
- */
+/* buildAbsolute and FileActions omitted here for brevity in this header comment.
+   The full definitions remain the same as in your original file (unchanged).
+   See the FileActions + buildAbsolute functions in your current file above. */
+
 const buildAbsolute = (pathOrObj) => {
   try {
     if (!pathOrObj) return null;
-
-    // If it's an object with a nested documents key (defensive)
     if (typeof pathOrObj === 'object' && pathOrObj.documents) {
-      // attempt to pick first document-like field
       const docKeys = ['aadharDoc','aadharFile','aadhar','panDoc','panFile','additionalProofFile'];
       for (const k of docKeys) {
         if (pathOrObj.documents[k]) return buildAbsolute(pathOrObj.documents[k]);
       }
     }
-
-    // If it's an object
     if (typeof pathOrObj === 'object') {
-      // direct url field
       if (pathOrObj.url && typeof pathOrObj.url === 'string' && pathOrObj.url.trim()) return pathOrObj.url;
-      // path field
       const p = (pathOrObj.path || pathOrObj.pathname || pathOrObj.file || pathOrObj.filename || null);
       if (p && typeof p === 'string' && p.trim()) {
         if (p.startsWith('http')) return p;
         const base = process.env.REACT_APP_API_URL
           ? process.env.REACT_APP_API_URL.replace(/\/api\/?$/, '')
           : (api?.defaults?.baseURL ? api.defaults.baseURL.replace(/\/api\/?$/, '') : window.location.origin);
-        // ensure leading slash
         const finalPath = p.startsWith('/') ? p : `/${p}`;
         return `${base}${finalPath}`;
       }
-      // fallback: maybe object is just a string-like value
       return null;
     }
-
-    // If it's a string
     if (typeof pathOrObj === 'string') {
       const s = pathOrObj.trim();
       if (!s) return null;
@@ -60,7 +47,6 @@ const buildAbsolute = (pathOrObj) => {
       const finalPath = s.startsWith('/') ? s : `/${s}`;
       return `${base}${finalPath}`;
     }
-
     return null;
   } catch (err) {
     console.error('buildAbsolute error', err, pathOrObj);
@@ -68,17 +54,14 @@ const buildAbsolute = (pathOrObj) => {
   }
 };
 
-/* FileActions component: Preview / Download / Copy URL */
 const FileActions = ({ fileRef, label = 'View file' }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [previewType, setPreviewType] = useState(null); // 'image'|'pdf'|null
+  const [previewType, setPreviewType] = useState(null);
 
-  // Defensive extraction of the original object (for filename/mimetype), but may be null
   const original = (fileRef && typeof fileRef === 'object') ? fileRef : null;
   const url = buildAbsolute(fileRef);
 
-  // small detector
   const detectType = (u, fileObj) => {
     if (!u && fileObj && fileObj.mimetype) {
       if (fileObj.mimetype.startsWith('image/')) return 'image';
@@ -94,7 +77,6 @@ const FileActions = ({ fileRef, label = 'View file' }) => {
   const handlePreview = (ev) => {
     ev?.preventDefault();
     if (!url) {
-      // helpful debug: print fileRef so we can see what backend sent
       console.warn('No URL for preview, fileRef:', fileRef);
       return alert('File not available for preview');
     }
@@ -111,7 +93,6 @@ const FileActions = ({ fileRef, label = 'View file' }) => {
     }
     const a = document.createElement('a');
     a.href = url;
-    // prefer filename if the backend returned it
     if (original && original.filename) a.download = original.filename;
     else {
       try {
@@ -184,7 +165,6 @@ const AdminUserDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // profile & docs
   const [user, setUser] = useState(null);
   const [docs, setDocs] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -197,13 +177,11 @@ const AdminUserDetail = () => {
   });
   const [files, setFiles] = useState({ aadharFile: null, panFile: null, additionalProofFile: null });
 
-  // report state
   const [userChits, setUserChits] = useState([]);
   const [payments, setPayments] = useState([]);
   const [reportLoading, setReportLoading] = useState(true);
   const [reportError, setReportError] = useState('');
 
-  // global search/filter for Joined Schemes & Recent Payments
   const [globalSearch, setGlobalSearch] = useState('');
 
   useEffect(() => {
@@ -284,46 +262,35 @@ const AdminUserDetail = () => {
 
   const handleInput = (k, v) => setForm((p) => ({ ...p, [k]: v }));
 
-  // replace existing handleSave in src/pages/AdminUserDetail.js with this:
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const fd = new FormData();
+      fd.append('aadharNumber', form.aadharNumber || '');
+      fd.append('panNumber', form.panNumber || '');
+      fd.append('additionalProofText', form.additionalProofText || '');
+      if (files.aadharFile) fd.append('aadharDoc', files.aadharFile);
+      if (files.panFile) fd.append('panDoc', files.panFile);
+      if (files.additionalProofFile) fd.append('additionalProofFile', files.additionalProofFile);
 
-const handleSave = async () => {
-  setSaving(true);
-  try {
-    const fd = new FormData();
-
-    fd.append('aadharNumber', form.aadharNumber || '');
-    fd.append('panNumber', form.panNumber || '');
-    fd.append('additionalProofText', form.additionalProofText || '');
-
-    // Append using the exact field names backend expects
-    if (files.aadharFile) fd.append('aadharDoc', files.aadharFile);
-    if (files.panFile) fd.append('panDoc', files.panFile);
-    if (files.additionalProofFile) fd.append('additionalProofFile', files.additionalProofFile);
-
-    // Optional debug: log the FormData entries (File objects will print as File)
-    // For debugging in browser console only:
-    // for (const pair of fd.entries()) {
-    //   // console.log(pair[0], pair[1]);
-    // }
-
-    const res = await adminUpdateUserDocuments(id, fd);
-    const updated = res?.documents || {};
-    setDocs(updated);
-    setForm({
-      aadharNumber: updated?.aadharNumber || '',
-      panNumber: updated?.panNumber || '',
-      additionalProofText: updated?.additionalProofText || ''
-    });
-    setFiles({ aadharFile: null, panFile: null, additionalProofFile: null });
-    alert('User documents updated.');
-    loadUserReport();
-  } catch (err) {
-    console.error('Save error', err);
-    alert(err?.response?.data?.message || 'Failed to save');
-  } finally {
-    setSaving(false);
-  }
-};
+      const res = await adminUpdateUserDocuments(id, fd);
+      const updated = res?.documents || {};
+      setDocs(updated);
+      setForm({
+        aadharNumber: updated?.aadharNumber || '',
+        panNumber: updated?.panNumber || '',
+        additionalProofText: updated?.additionalProofText || ''
+      });
+      setFiles({ aadharFile: null, panFile: null, additionalProofFile: null });
+      alert('User documents updated.');
+      loadUserReport();
+    } catch (err) {
+      console.error('Save error', err);
+      alert(err?.response?.data?.message || 'Failed to save');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleChangeStatus = async (newStatus) => {
     if (!window.confirm(`Change verification status to "${newStatus.toUpperCase()}"?`)) return;
@@ -346,7 +313,6 @@ const handleSave = async () => {
   const totalPaymentsCount = payments.length;
   const totalPaymentsAmount = payments.reduce((acc, p) => acc + Number(p.amount || 0), 0);
 
-  // ---- filter logic: apply globalSearch to both chits & payments ----
   const normalizedQuery = (globalSearch || '').trim().toLowerCase();
   const filteredChits = useMemo(() => {
     if (!normalizedQuery) return userChits;
@@ -394,21 +360,14 @@ const handleSave = async () => {
       </header>
 
       <div className="aud-grid">
-        {/* User Info Card */}
         <section className="card user-info">
           <h3>Profile</h3>
           <div className="row"><span className="label">Name</span><span>{user?.name || '-'}</span></div>
           <div className="row"><span className="label">Email</span><span>{user?.email || '-'}</span></div>
           <div className="row"><span className="label">Phone</span><span>{user?.phone || '-'}</span></div>
           <div className="row"><span className="label">Address</span><span>{user?.address || '-'}</span></div>
-          {/* {user && Object.keys(user).filter(k => !['_id','password','documents','__v'].includes(k)).map((k) => (
-            ['name','email','phone','address'].includes(k) ? null : (
-              <div key={k} className="row"><span className="label">{k}</span><span>{String(user[k])}</span></div>
-            )
-          ))} */}
         </section>
 
-        {/* Document Proofs Card */}
         <section className="card docs-card">
           <h3>Document Proofs</h3>
 
@@ -422,7 +381,6 @@ const handleSave = async () => {
           <div className="row">
             <span className="label">Aadhar Document</span>
             <div className="value file-block">
-              {/* Use either docs.aadharDoc OR docs.aadharFile (backend shape may vary) */}
               <FileActions fileRef={docs?.aadharDoc || docs?.aadharFile || docs?.aadharFileUrl || null} label="Aadhar Document" />
               <input type="file" accept="image/*,application/pdf" onChange={(e) => handleFileChange('aadharFile', e)} />
             </div>
@@ -481,11 +439,9 @@ const handleSave = async () => {
         </section>
       </div>
 
-      {/* ===== User Report Section ===== */}
       <section className="card user-report">
         <h3>User Report</h3>
 
-        {/* GLOBAL SEARCH (applies to both Joined Schemes and Recent Payments) */}
         <div className="global-search-row" style={{ marginBottom: 12, display: 'flex', gap: 8, alignItems: 'center' }}>
           <input
             type="search"
@@ -543,7 +499,12 @@ const handleSave = async () => {
                   <tbody>
                     {filteredChits.map((c) => (
                       <tr key={c._id}>
-                        <td>{c.name}</td>
+                        {/* Link to chit details and pass the user id as memberId in query */}
+                        <td>
+                          <Link to={`/admin/chits/${c._id}?memberId=${id}`} className="link">
+                            {c.name}
+                          </Link>
+                        </td>
                         <td>₹{c.amount}</td>
                         <td>{c.durationInMonths} months</td>
                         <td>{c.joinedAt ? new Date(c.joinedAt).toLocaleDateString() : '-'}</td>
@@ -571,7 +532,15 @@ const handleSave = async () => {
                     {filteredPayments.slice(0, 50).map((p) => (
                       <tr key={p._id}>
                         <td>{p.createdAt ? new Date(p.createdAt).toLocaleString() : '-'}</td>
-                        <td>{p.chitName || (p.chitId ? String(p.chitId) : '-')}</td>
+                        <td>
+                          {p.chitId ? (
+                            <Link to={`/admin/chits/${p.chitId}?memberId=${id}`} className="link">
+                              {p.chitName || String(p.chitId)}
+                            </Link>
+                          ) : (
+                            p.chitName || '-'
+                          )}
+                        </td>
                         <td>₹{p.amount}</td>
                       </tr>
                     ))}
