@@ -81,6 +81,17 @@ const JoinChitScheme = () => {
     fetch();
   }, [user]);
 
+   const fmtDate = (d) => {
+    if (!d) return '—';
+    try {
+      const dt = new Date(d);
+      if (Number.isNaN(dt.getTime())) return '—';
+      return dt.toLocaleDateString();
+    } catch {
+      return '—';
+    }
+  };
+
   const handleJoin = async (schemeId) => {
     if (!user?._id) {
       alert('You must be logged in to join a scheme.');
@@ -149,9 +160,9 @@ const JoinChitScheme = () => {
 
                     <div className="detail-item">
                       <UsersRound className="icon" />
-                      <span>Members:</span>
+                      <span>Total Members:</span>
                       <strong>
-                        {getJoinedCount(scheme)}/{scheme.totalMembers}
+                        {scheme.totalMembers}
                       </strong>
                     </div>
 
@@ -159,6 +170,12 @@ const JoinChitScheme = () => {
                       <Clock className="icon" />
                       <span>Duration:</span>
                       <strong>{scheme.durationInMonths} months</strong>
+                    </div>
+
+                     <div className="detail-item">
+                      <Clock className="icon" />
+                      <span>Start Date:</span>
+                      <strong>{fmtDate(scheme.startDate || scheme.createdAt || scheme.launchDate)}</strong>
                     </div>
                   </div>
                 </div>
