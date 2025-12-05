@@ -219,7 +219,7 @@ const ChitDetails = () => {
         releasedAmountNum: Number(getReleasedAmountFromRow(r) || 0),
       }));
 
-      norm.sort((a, b) => {
+       norm.sort((a, b) => {
         const da = a.parsedDate ? a.parsedDate.getTime() : 0;
         const db = b.parsedDate ? b.parsedDate.getTime() : 0;
         if (da !== db) return da - db;
@@ -229,7 +229,10 @@ const ChitDetails = () => {
       let runningWallet = 0;
       let runningReleased = 0;
       let totalAutoPayouts = 0;
-      const withCum = norm.map((r) => {
+
+      // norm is already sorted oldest → newest, so index gives us
+      // "1st generated chit", "2nd", "3rd", etc.
+      const withCum = norm.map((r, index) => {
         runningWallet += Number(r.walletAmountNum || 0);
         runningReleased += Number(r.releasedAmountNum || 0);
 
@@ -251,6 +254,8 @@ const ChitDetails = () => {
 
         return {
           ...r,
+          // sequential chit number from first ever generated chit
+          chitNoSeq: index + 1,
           cumWalletBeforeReleases: cumBefore,
           cumWalletRemainingAfterReleases: remainingAfterReleases,
           autoPayoutsThisRow,
@@ -260,6 +265,7 @@ const ChitDetails = () => {
           dateDisplay: r.parsedDate.toLocaleDateString(),
         };
       });
+
 
       withCum.sort((a, b) => {
         const da = a.parsedDate ? a.parsedDate.getTime() : 0;
@@ -494,7 +500,7 @@ const ChitDetails = () => {
       alert('Row id missing');
       return;
     }
-    if (!window.confirm(`Delete generated chit #${row.chitNo || ''} (${row.dateDisplay || ''})? This cannot be undone.`)) return;
+   if (!window.confirm(`Delete generated chit #${row.chitNoSeq ?? row.chitNo ?? ''} (${row.dateDisplay || ''})? This cannot be undone.`)) return;
 
     setRowActionLoading(true);
     try {
@@ -759,7 +765,7 @@ const ChitDetails = () => {
                   {generatedRows.map((r, i) => (
                     <tr key={`${r._id || r.chitId}-${i}`}>
                       <td>{r.dateDisplay}</td>
-                      <td>{r.chitNo}</td>
+                      <td>{r.chitNoSeq ?? r.chitNo}</td>
                       <td>{r.chitName}</td>
                       <td>{Number(r.cumWalletRemainingAfterReleases).toLocaleString('en-IN')}</td>
                       <td>{Number(r.bidAmountNum).toLocaleString('en-IN')}</td>
