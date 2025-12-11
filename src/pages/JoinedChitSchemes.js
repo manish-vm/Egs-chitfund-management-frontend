@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { getJoinedSchemes } from '../services/chit';
 import { getContributionsByUser } from '../services/contributionService';
 import { useAuth } from '../context/AuthContext';
+import api from '../services/api';
 import {
   LuClock3,
   LuIndianRupee,
@@ -84,6 +85,7 @@ const JoinedChitSchemes = () => {
   const { user } = useAuth();
   const [joined, setJoined] = useState([]);
   const [contributions, setContributions] = useState([]);
+  const [bidRequests, setBidRequests] = useState({});
   const [loading, setLoading] = useState(true);
 
   // load joined chits
@@ -122,6 +124,35 @@ const JoinedChitSchemes = () => {
     }
   }, [user?._id]);
 
+  // load bid requests
+  const loadBidRequests = useCallback(async () => {
+    try {
+      if (!user || !user._id) {
+        setBidRequests({});
+        return;
+      }
+      const res = await api.get('/bid-requests/user');
+      const requests = Array.isArray(res.data)
+        ? res.data
+        : Array.isArray(res.data?.data)
+        ? res.data.data
+        : res.data?.requests || [];
+
+      // Create a map of chitId to bid request status
+      const requestMap = {};
+      requests.forEach(request => {
+        const chitId = request.chitId?._id || request.chitId;
+        if (chitId) {
+          requestMap[chitId] = request.status;
+        }
+      });
+      setBidRequests(requestMap);
+    } catch (err) {
+      console.error('Failed to fetch bid requests:', err);
+      setBidRequests({});
+    }
+  }, [user?._id]);
+
   // first time + polling
   useEffect(() => {
     let mounted = true;
@@ -129,7 +160,7 @@ const JoinedChitSchemes = () => {
 
     const init = async () => {
       setLoading(true);
-      await Promise.all([loadJoined(), loadContributions()]);
+      await Promise.all([loadJoined(), loadContributions(), loadBidRequests()]);
       if (mounted) setLoading(false);
     };
 
@@ -138,17 +169,20 @@ const JoinedChitSchemes = () => {
     pollId = setInterval(async () => {
       await loadContributions();
       await loadJoined();
+      await loadBidRequests();
     }, POLL_INTERVAL);
 
     const onVisibility = () => {
       if (document.visibilityState === 'visible') {
         loadContributions();
         loadJoined();
+        loadBidRequests();
       }
     };
     const onFocus = () => {
       loadContributions();
       loadJoined();
+      loadBidRequests();
     };
 
     document.addEventListener('visibilitychange', onVisibility);
@@ -160,7 +194,7 @@ const JoinedChitSchemes = () => {
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('focus', onFocus);
     };
-  }, [loadJoined, loadContributions]);
+  }, [loadJoined, loadContributions, loadBidRequests]);
 
   // enrich entries with computed values
   const enriched = useMemo(() => {
@@ -258,6 +292,22 @@ const JoinedChitSchemes = () => {
       );
     });
   }, [enriched, globalSearch]);
+
+  // Handle raise chit request
+  const handleRaiseChit = async (chitId) => {
+    try {
+      const response = await api.post('/bid-requests', { chitId });
+      alert('Bid request sent successfully! Admin will review your request.');
+      // Update the bidRequests state to reflect the new pending request
+      setBidRequests(prev => ({
+        ...prev,
+        [chitId]: 'pending'
+      }));
+    } catch (err) {
+      console.error('Error sending bid request:', err);
+      alert('Failed to send bid request. Please try again.');
+    }
+  };
 
   return (
     <div className="joined-container">
@@ -399,6 +449,18 @@ const JoinedChitSchemes = () => {
                   {String(id).slice(-6).toUpperCase()}
                 </span>
               </div>
+
+              <button
+                className={`btn ${bidRequests[id] === 'approved' ? 'btn-success' : bidRequests[id] === 'rejected' ? 'btn-danger' : 'btn-primary'}`}
+                onClick={() => handleRaiseChit(id)}
+                style={{ marginTop: '10px', width: '100%' }}
+                disabled={bidRequests[id] === 'pending' || bidRequests[id] === 'approved'}
+              >
+                {bidRequests[id] === 'pending' ? 'Request Sent' :
+                 bidRequests[id] === 'approved' ? 'Approved' :
+                 bidRequests[id] === 'rejected' ? 'Rejected' :
+                 'Raise Bid Request'}
+              </button>
             </div>
           );
         })

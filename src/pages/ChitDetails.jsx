@@ -180,6 +180,8 @@ const ChitDetails = () => {
 
   const [contributionsForChit, setContributionsForChit] = useState([]);
   const [contribsLoading, setContribsLoading] = useState(false);
+  const [bidRequestsForChit, setBidRequestsForChit] = useState([]);
+  const [bidRequestsLoading, setBidRequestsLoading] = useState(false);
 
   const handleMemberClick = (memberObj) => {
     const { id: memberId } = resolveMemberData(memberObj);
@@ -313,6 +315,29 @@ const ChitDetails = () => {
     }
   }, []);
 
+  const loadBidRequestsForChit = useCallback(async (chitId) => {
+    if (!chitId) {
+      setBidRequestsForChit([]);
+      return;
+    }
+    setBidRequestsLoading(true);
+    try {
+      const resp = await api.get('/bid-requests');
+      const allRequests = resp?.data ?? [];
+      const chitRequests = allRequests.filter(req => req.chitId?._id === chitId || req.chitId === chitId);
+      setBidRequestsForChit(chitRequests);
+    } catch (err) {
+      console.error('Failed to load bid requests for chit', err);
+      setBidRequestsForChit([]);
+    } finally {
+      setBidRequestsLoading(false);
+    }
+  }, []);
+
+  const hasApprovedBid = (memberId, bidRequests) => {
+    return bidRequests.some(req => req.userId === memberId && req.status === 'approved');
+  };
+
   useEffect(() => {
     const load = async () => {
       setLoading(true);
@@ -351,6 +376,7 @@ const ChitDetails = () => {
 
         await loadGeneratedRows(data._id || id, tcv);
         await loadContributionsForChit(data._id || id);
+        await loadBidRequestsForChit(data._id || id);
       } catch (err) {
         console.error('Failed to load chit:', err);
         setError(err?.response?.data?.message || 'Failed to load chit details');
@@ -371,11 +397,12 @@ const ChitDetails = () => {
       if (cid) {
         loadGeneratedRows(cid, tcv);
         loadContributionsForChit(cid);
+        loadBidRequestsForChit(cid);
       }
     };
     window.addEventListener('focus', onFocus);
     return () => window.removeEventListener('focus', onFocus);
-  }, [chit, id, loadGeneratedRows, loadContributionsForChit]);
+  }, [chit, id, loadGeneratedRows, loadContributionsForChit, loadBidRequestsForChit]);
 
   const handleBidChange = (val) => {
     setBidAmount(val);
@@ -624,7 +651,7 @@ const ChitDetails = () => {
                       style={{ cursor: clickable ? 'pointer' : 'default', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     >
                       <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                        <div className="member-name">{member.name || 'Member'}</div>
+                        <div className="member-name">{member.name || 'Member'} {hasApprovedBid(member.id, bidRequestsForChit) ? '(chit taken)' : ''}</div>
                         {isTarget && <div className="muted" style={{ fontSize: 12 }}> (Filtered user)</div>}
                       </div>
 
@@ -659,7 +686,7 @@ const ChitDetails = () => {
                       style={{ cursor: clickable ? 'pointer' : 'default', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     >
                       <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                        <div className="member-name">{member.name || 'Member'}</div>
+                        <div className="member-name">{member.name || 'Member'} {hasApprovedBid(member.id, bidRequestsForChit) ? '(chit taken)' : ''}</div>
                         {isTarget && <div className="muted" style={{ fontSize: 12 }}> (Filtered user)</div>}
                       </div>
 
@@ -831,3 +858,4 @@ const ChitDetails = () => {
 };
 
 export default ChitDetails;
+

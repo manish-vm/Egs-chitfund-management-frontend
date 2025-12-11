@@ -25,6 +25,7 @@ const Sidebar = () => {
     { name: 'Manage Images', path: '/admin/manage-images', icon: <FaImages /> },
     { name: 'Pending User Join Request', path: '/admin/AdminJoinRequests', icon: <FaUserPlus /> },
     { name: 'Pending User Payment Request', path: '/admin/paymentsApprovals', icon: <FaMoneyCheckAlt /> },
+    { name: 'Pending Bid Request', path: '/admin/bid-requests', icon: <FaUsers /> }
   ];
 
   // close on route change (useful when clicking a link on mobile)

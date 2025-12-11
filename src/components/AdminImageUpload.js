@@ -7,7 +7,7 @@ const api = axios.create({
   baseURL:
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000/api/images"
-      : "https://egs-chitfund-management-backend.onrender.com/api/images",
+      : "https://node.egschitfund.com/api/images",
 });
 
 export default function AdminImageUpload() {
@@ -158,4 +158,3 @@ export default function AdminImageUpload() {
     </div>
   );
 }
-

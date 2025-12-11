@@ -1,0 +1,52 @@
+.admin-bid-requests {
+  display: flex;
+  margin-top: 90px;
+}
+
+
+
+.Bidrequest-h2{
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #112e7d;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.3px;
+}
+.bid-requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.bid-requests-table th,
+.bid-requests-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.bid-requests-table th {
+  background-color: #f2f2f2;
+}
+
+.btn {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}

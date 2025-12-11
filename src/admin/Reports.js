@@ -10,6 +10,7 @@ import './Reports.css';
 
 const Reports = () => {
   const [reportData, setReportData] = useState([]);
+  const [generatedChits, setGeneratedChits] = useState([]);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -74,6 +75,8 @@ const Reports = () => {
         }
 
         const items = [];
+        const allGeneratedChits = [];
+
         for (const s of rawList) {
           const id = s._id || s.id;
           try {
@@ -112,6 +115,23 @@ const Reports = () => {
               startDate: c.startDate,
               createdAt: c.createdAt,
             });
+
+            // Fetch generated chits for this chit
+            try {
+              const generatedRes = await api.get(`/generateChit/chit/${id}/generated`);
+              const generatedList = generatedRes.data || [];
+              if (Array.isArray(generatedList)) {
+                const generatedWithParent = generatedList.map(gen => ({
+                  ...gen,
+                  chitId: id,
+                  parentChitName: c.name || '—'
+                }));
+                allGeneratedChits.push(...generatedWithParent);
+              }
+            } catch (genErr) {
+              console.warn('Failed to fetch generated chits for', id, genErr?.message || genErr);
+            }
+
           } catch (err) {
             console.warn('Failed to fetch chit detail for', id, err?.message || err);
           }
@@ -126,6 +146,7 @@ const Reports = () => {
 
         if (mounted) {
           setReportData(items);
+          setGeneratedChits(allGeneratedChits);
           setSummary({ totalChits, totalMembers, totalCollected, totalPending, totalWallet });
         }
       } catch (err) {
@@ -141,6 +162,10 @@ const Reports = () => {
 
   const openChit = (chitId) => {
     if (chitId) navigate(`/admin/chits/${chitId}`);
+  };
+
+  const openGeneratedChit = (chitId, generatedId) => {
+    if (chitId && generatedId) navigate(`/admin/chits/${chitId}/generated/${generatedId}`);
   };
 
   const formatCurrency = (n) => Number(n || 0).toLocaleString('en-IN');
@@ -187,6 +212,46 @@ const Reports = () => {
               <h3>Total Commission Amount</h3>
               <p>₹{formatCurrency((summary.totalPending + summary.totalCollected) - summary.totalWallet)}</p>
             </div>
+          </div>
+        )}
+
+        {/* Generated Chits Table */}
+        {!loading && generatedChits.length > 0 && (
+          <div className="reports-table-wrap" style={{ marginBottom: 40 }}>
+            <h2 style={{ marginBottom: 20 }}>Generated Chits</h2>
+            <table className="reports-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Chit No</th>
+                  <th>Chit Name</th>
+                  <th>Parent Chit</th>
+                  <th>Wallet Balance</th>
+                  <th>Bid Amount</th>
+                  <th>Distributed</th>
+                  <th>Auto Payouts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {generatedChits.map((item) => (
+                  <tr
+                    key={`${item.chitId}-${item._id}`}
+                    className="report-row"
+                    onClick={() => openGeneratedChit(item.chitId, item._id)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <td>{item.date ? new Date(item.date).toLocaleDateString() : '—'}</td>
+                    <td>{item.chitNo || item.chitNoSeq || '—'}</td>
+                    <td>{item.chitName || '—'}</td>
+                    <td>{item.parentChitName || '—'}</td>
+                    <td>₹{formatCurrency(item.walletAmount)}</td>
+                    <td>₹{formatCurrency(item.bidAmount)}</td>
+                    <td>₹{formatCurrency(item.distributed)}</td>
+                    <td>{item.autoPayoutsThisRow ? `${item.autoPayoutsThisRow} (${formatCurrency(item.autoPayoutTotalAmount)})` : '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
 
