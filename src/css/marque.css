@@ -1,0 +1,43 @@
+.marquee-box {
+    width: 100%;
+    overflow: hidden;
+    background: #f7c800; /* Yellow banner background */
+    padding: 12px 0;
+    display: flex;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+/* Each track is 100% width and scrolls left */
+.marquee-track {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    animation: scroll 10s linear infinite;
+}
+
+/* Bold black text */
+.bold-text {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111;
+}
+
+/* Outlined text like your reference image */
+.outline-text {
+    font-size: 28px;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1.5px #111;
+}
+
+/* Infinite chain animation */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%); /* move left completely so duplicate continues */
+    }
+}

@@ -1,0 +1,91 @@
+/* ==============================
+   FOOTER BASE
+============================== */
+.footer {
+  background: #111;
+  padding: 60px 30px;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* ==============================
+   FOOTER COLUMNS
+============================== */
+.footer-section {
+  width: 22%;
+  min-width: 220px;
+  margin-bottom: 30px;
+}
+
+.footer-section h3 {
+  font-size: 16px;
+  margin-bottom: 18px;
+  font-weight: 600;
+  color: rgb(255, 185, 44);
+}
+
+.footer-section a,
+.footer-section p {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.footer-section a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+/* ==============================
+   SOCIAL ICONS
+============================== */
+.footer-social {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.footer-social a {
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #444;
+  color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.25s;
+}
+
+.footer-social a:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media (max-width: 900px) {
+  .footer-section {
+    width: 45%;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-section {
+    width: 100%;
+  }
+}

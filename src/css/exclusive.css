@@ -1,0 +1,142 @@
+/* ===========================
+   METRO EXCLUSIVES STRIP
+   =========================== */
+
+.exclusive-strip {
+  max-width: 1200px;
+  margin: 2.5rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.exclusive-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.exclusive-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.exclusive-header p {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+/* Slider layout */
+.exclusive-slider {
+  position: relative;
+}
+
+.exclusive-viewport {
+  overflow: hidden;
+}
+
+.exclusive-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+/* Each card = 25% (4 per row) on desktop */
+.exclusive-card {
+  flex: 0 0 25%;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+.exclusive-card-bg {
+  position: relative;
+  overflow: hidden;
+  height: 360px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.exclusive-card-bg:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.26);
+}
+
+.exclusive-card-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.exclusive-card-content {
+  position: absolute;
+  left: 1.2rem;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  color: #ffffff;
+}
+
+.exclusive-card-content h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.exclusive-card-content p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+/* Arrows */
+.exclusive-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.exclusive-arrow-left {
+  left: 0.6rem;
+}
+
+.exclusive-arrow-right {
+  right: 0.6rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .exclusive-card {
+    flex: 0 0 50%; /* 2 per view on tablet */
+  }
+
+  .exclusive-card-bg {
+    height: 280px;
+  }
+
+  .exclusive-track {
+    transform: translateX(0) !important; /* simple scroll on tablet/mobile */
+  }
+
+  .exclusive-arrow {
+    display: none; /* let user swipe/scroll naturally */
+  }
+}
+
+@media (max-width: 640px) {
+  .exclusive-card {
+    flex: 0 0 100%; /* 1 per view on mobile */
+  }
+
+  .exclusive-card-bg {
+    height: 260px;
+  }
+}

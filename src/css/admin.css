@@ -1,0 +1,104 @@
+.admin-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  margin-top: 100px;
+}
+
+.admin-sidebar {
+  background: #111827;
+  color: #e5e7eb;
+  padding: 1rem;
+  min-height: calc(100vh - 120px);
+}
+
+.admin-sidebar h2 {
+  margin-top: 0;
+}
+
+.admin-sidebar nav a {
+  display: block;
+  padding: 0.4rem 0;
+  color: #d1d5db;
+  font-size: 0.9rem;
+}
+
+.admin-sidebar nav a.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.admin-content {
+  padding: 1rem 1.5rem;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.admin-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-form {
+  max-width: 640px;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-image-list {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-image-list img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    min-height: auto;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+  }
+}

@@ -1,0 +1,236 @@
+/* ============================
+   PAGE LAYOUT
+============================ */
+.auth-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+    background: #f5f5f5;
+    margin-top: 50px;
+}
+
+/* ============================
+   CARD (Reduced Size)
+============================ */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================
+   LOGIN / REGISTER TABS
+============================ */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #eee;
+}
+
+.auth-tabs button {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #777;
+    border-bottom: 3px solid transparent;
+    transition: 0.25s;
+}
+
+.auth-tabs button.active {
+    color: #111;
+    border-bottom-color: #111;
+}
+
+/* ============================
+   EMAIL / PHONE SWITCH
+============================ */
+.auth-method-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.auth-method-toggle button {
+    flex: 1;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+    border: 2px solid #ddd;
+    background: #fafafa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.auth-method-toggle button.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+/* ============================
+   FORM FIELDS (Reduced)
+============================ */
+.auth-form .form-row {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.form-row input {
+    padding: 9px 10px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+.form-row input:focus {
+    border-color: #111;
+}
+
+/* ============================
+   BUTTONS (Smaller)
+============================ */
+.btn-primary {
+    background: #111;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-primary:hover {
+    opacity: 0.85;
+}
+
+.wide {
+    width: 100%;
+}
+
+/* Google Button */
+.btn-google {
+    background: #fff;
+    border: 2px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-google:hover {
+    background: #f4f4f4;
+}
+
+/* ============================
+   DIVIDER
+============================ */
+.auth-divider {
+    text-align: center;
+    margin: 14px 0;
+    font-size: 13px;
+    color: #666;
+    position: relative;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    width: 38%;
+    height: 1px;
+    background: #ddd;
+    position: absolute;
+    top: 50%;
+}
+
+.auth-divider::before {
+    left: 0;
+}
+
+.auth-divider::after {
+    right: 0;
+}
+
+/* ============================
+   RESPONSIVE MOBILE
+============================ */
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 1.5rem;
+        box-shadow: none;
+        /* Cleaner look on mobile */
+        border: 1px solid #eee;
+    }
+
+    .auth-tabs button {
+        font-size: 1rem;
+        /* Larger text for touch */
+        padding: 12px 0;
+    }
+
+    .auth-method-toggle button {
+        font-size: 0.9rem;
+        padding: 10px 0;
+    }
+
+    .form-row input {
+        padding: 12px;
+        /* Larger touch target */
+        font-size: 16px;
+        /* Avoid IOS zoom */
+    }
+
+    .btn-primary {
+        padding: 14px;
+    }
+}
+
+/* ============================
+   ERROR MESSAGE
+============================ */
+.error-message {
+    color: #ff3b30;
+    background: #ffe5e5;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    text-align: center;
+    border: 1px solid #ffcccc;
+}
