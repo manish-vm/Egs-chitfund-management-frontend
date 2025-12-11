@@ -1,141 +1,150 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import HomePage from './pages/HomePage';
-import CategoryPage from './pages/CategoryPage';
-import ProductListPage from './pages/ProductListPage';
-import ProductDetailsPage from './pages/ProductDetailsPage';
-import CartPage from './pages/CartPage';
-import CheckoutPage from './pages/CheckoutPage';
-import OrderSuccessPage from './pages/OrderSuccessPage';
-import ProfilePage from './pages/PrivacyPolicyPage';
-import AuthPage from './pages/AuthPage';
-import AdminDashboardPage from './pages/admin/AdminDashboardPage';
-import AdminProductsPage from './pages/admin/AdminProductsPage';
-import AdminProductEditPage from './pages/admin/AdminProductEditPage';
-import AdminOrdersPage from './pages/admin/AdminOrdersPage';
-import AdminUsersPage from './pages/admin/AdminUsersPage';
-import PrivateRoute from './routes/PrivateRoute';
-import AdminRoute from './routes/AdminRoute';
-import UserDashboard from './pages/UserDashboard';
-import TermsConditionsPage from './pages/TermsConditionsPage';
-import PrivacyPolicy from './pages/PrivacyPolicyPage';
-import ContactPage from './pages/ContactPage';
-import TrackOrderPage from './pages/TrackOrderPage';
-import WalletPage from './pages/WalletPage';
 
-function App() {
+import Header from './components/Header';
+import Footer from './components/Footer';
+import AppLayout from './components/AppLayout';
+
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import ChitSchemeList from './pages/ChitSchemeList';
+import JoinChitScheme from './pages/JoinChitScheme';
+import MyChitsWithPay from './components/MyChitsWithPay';
+import ContributionHistory from './components/ContributionHistory';
+import ChitHistory from './pages/ChitHistory';
+import JoinedChitSchemes from './pages/JoinedChitSchemes';
+import NotFound from './pages/NotFound';
+
+import AdminDashboard from './admin/AdminDashboard';
+import CreateChitScheme from './admin/CreateChitScheme';
+import ManageUsers from './admin/ManageUsers';
+import ManageChits from './admin/ManageChits';
+import Reports from './admin/Reports';
+import AdminImageUpload from './components/AdminImageUpload';
+import ProtectedRoute from './components/ProtectedRoute';
+import PaymentPage from './components/PaymentPage';
+import AdminJoinRequests from './admin/AdminJoinRequests';
+import AdminUserDetail from './admin/AdminUserDetail';
+import PaymentRedirect from './pages/PaymentRedirect';
+import AdminPaymentApprovals from './admin/AdminPaymentApprovals';
+import ChitDetails from './pages/ChitDetails';
+import GeneratedChitDetails from './pages/GeneratedChitDetails';
+import PublicChitSchemes from "./pages/PublicChitSchemes";
+import AdminBidRequests from './admin/AdminBidRequests';
+
+// import AdminWallets from './admin/AdminWallets';
+
+const App = () => {
   return (
-    <div className="app">
+    <>
       <Header />
-      <main className="main-content">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/terms" element={<TermsConditionsPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/account" element={<UserDashboard />} />
-          <Route
-            path="/wallet"
-            element={
-              <PrivateRoute>
-                <WalletPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/category/:slug" element={<CategoryPage />} />
-          <Route path="/products" element={<ProductListPage />} />
-          <Route path="/product/:id" element={<ProductDetailsPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route
-            path="/checkout"
-            element={
-              <PrivateRoute>
-                <CheckoutPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/order-success/:orderId"
-            element={
-              <PrivateRoute>
-                <OrderSuccessPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <ProfilePage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/track-order" element={<TrackOrderPage />} />
 
-          {/* ✅ ADMIN ROUTES */}
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboardPage />
-              </AdminRoute>
-            }
-          />
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/public-chits" element={<PublicChitSchemes />} />
 
+        {/* Protected user routes */}
+        <Route element={<ProtectedRoute />}>
           <Route
-            path="/admin/products"
+            path="/dashboard"
             element={
-              <AdminRoute>
-                <AdminProductsPage />
-              </AdminRoute>
+              <AppLayout>
+                <Dashboard />
+              </AppLayout>
             }
           />
+          <Route
+            path="/chits"
+            element={
+              <AppLayout>
+                <ChitSchemeList />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/join-chit/:id"
+            element={
+              <AppLayout>
+                <JoinChitScheme />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/my-chits"
+            element={
+              <AppLayout>
+                <MyChitsWithPay />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/contribution-history"
+            element={
+              <AppLayout>
+                <ContributionHistory />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <AppLayout>
+                <ChitHistory />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/joined-schemes"
+            element={
+              <AppLayout>
+                <JoinedChitSchemes />
+              </AppLayout>
+            }
+          />
+        </Route>
+        <Route path="/payment" element={
+          <AppLayout>
+            <PaymentPage />
+        </AppLayout>} />
 
-          {/* ✅ FIXED: NEW PRODUCT ROUTE */}
-          <Route
-            path="/admin/products/new"
-            element={
-              <AdminRoute>
-                <AdminProductEditPage />
-              </AdminRoute>
-            }
-          />
+        <Route path="/payments/redirect/:id" 
+        element={
+        <AppLayout>
+          <PaymentRedirect />
+          </AppLayout>
+        } />
 
-          {/* ✅ EDIT PRODUCT ROUTE */}
-          <Route
-            path="/admin/products/:id"
-            element={
-              <AdminRoute>
-                <AdminProductEditPage />
-              </AdminRoute>
-            }
-          />
+        
 
-          <Route
-            path="/admin/orders"
-            element={
-              <AdminRoute>
-                <AdminOrdersPage />
-              </AdminRoute>
-            }
-          />
+        {/* Admin routes */}
+        <Route element={<ProtectedRoute adminOnly={true} />}>
+          <Route path="/admin" element={<Reports />} />
+          <Route path="/admin/create-chit" element={<CreateChitScheme />} />
+          <Route path="/admin/manage-users" element={<ManageUsers />} />
+          <Route path="/admin/manage-chits" element={<ManageChits />} />
+          <Route path="/admin/reports" element={<Reports />} />
+          <Route path="/admin/chits/:id" element={<ChitDetails />} />
+          <Route path="/admin/chits/:chitId/generated/:generatedId" element={<GeneratedChitDetails />} />
+           <Route path="/admin/manage-images" element={<AdminImageUpload />} />
+        <Route path="/admin/AdminJoinRequests" element={<AdminJoinRequests />} />
+        <Route path="/admin/users/:id" element={<AdminUserDetail />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/paymentsApprovals" element={<AdminPaymentApprovals />} />
+        <Route path="/admin/bid-requests" element={<AdminBidRequests />} />
+        </Route>
 
-          <Route
-            path="/admin/users"
-            element={
-              <AdminRoute>
-                <AdminUsersPage />
-              </AdminRoute>
-            }
-          />
-        </Routes>
-      </main>
+        {/* 404 Not Found */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
       <Footer />
-    </div>
+    </>
   );
-}
+};
 
 export default App;
