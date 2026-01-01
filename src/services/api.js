@@ -1,7 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
-const baseURL = 'http://localhost:5000/api'|| 'https://node.egschitfund.com/api';
+const baseURL = 'http://localhost:5000/api'|| 'https://node.egschitfund.com/api' || 'https://egs-chitfund-management-backend.onrender.com/api';
 
 const api = axios.create({
   baseURL,
@@ -35,3 +35,4 @@ api.interceptors.response.use(
 );
 
 export default api;
+
